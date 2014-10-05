@@ -1,6 +1,6 @@
 {
   "name": "mockify",
-  "version": "0.0.2",
+  "version": "0.2.1",
   "scripts": {
     "start": "./node_modules/.bin/forever start daemon/app.js",
     "stop": "./node_modules/.bin/forever stop daemon/app.js",
@@ -68,7 +68,7 @@
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/cr0cK/mockify.git"
+    "url": "https://github.com/gandi/mockify.git"
   },
   "keywords": [
     "Proxy",
@@ -79,7 +79,7 @@
   "author": "Alexis Mineaud",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cr0cK/mockify/issues"
+    "url": "https://github.com/gandi/mockify/issues"
   },
-  "homepage": "https://github.com/cr0cK/mockify"
+  "homepage": "https://github.com/gandi/mockify"
 }
