@@ -15,7 +15,7 @@ npm install -g mockify
 
 * From source:
 ``` bash
-git clone https://github.com/cr0cK/mockify.git && cd mockify
+git clone https://github.com/gandi/mockify.git && cd mockify
 sudo npm link
 ```
 
@@ -28,12 +28,14 @@ cd mockify
 
 # install dependencies
 npm install
-bower intall
+cd www
+bower install
+cd ..
 
-# watch your app (the build will be triggered for each modification and your code will be linted)
+# in a first terminal, watch your app (lint all JS and build the webapp for each modification)
 ./gulp watch
 
-# start mockify
+# in a second one, start mockify
 ./gulp start
 
 # Just type ./gulp to see all available tasks.
@@ -58,7 +60,7 @@ Mockify uses a SQLite database to store data and spawn in-memory databases for m
 
 ## The different parts of mockify
 
-![alt tag](https://github.com/cr0cK/mockify/blob/master/doc/architecture.png)
+![alt tag](https://github.com/gandi/mockify/blob/master/doc/architecture.png)
 
 ## Features
 
@@ -67,7 +69,7 @@ Mockify uses a SQLite database to store data and spawn in-memory databases for m
 
 ## Using mockify with the built-in webapp
 
-![alt tag](https://github.com/cr0cK/mockify/blob/master/doc/mockify.png)
+![alt tag](https://github.com/gandi/mockify/blob/master/doc/mockify.png)
 
 ## Using mockify from the command line
 
