@@ -4,12 +4,12 @@
   'use strict';
 
   angular.module('mockify.service.webSocket', [
+    'mockify.service.config'
   ])
 
-  .factory('webSocketService', ['$rootScope', '$interval',
-    function ($rootScope, $interval) {
-      // @FIXME The port should be read from the config
-      var socket = io('http://localhost:5001');
+  .factory('webSocketService', ['$rootScope', '$interval', 'configFactory',
+    function ($rootScope, $interval, config) {
+      var socket = io('http://localhost:' + config.websocket.port);
 
       // check that the websocket server is up every X secs
       $interval(function () {

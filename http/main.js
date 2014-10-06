@@ -9,7 +9,8 @@ module.exports = function () {
       favicon        = require('static-favicon'),
       methodOverride = require('method-override'),
       errorHandler   = require('errorhandler'),
-      indexRouter    = require('./routes/index');
+      indexRouter    = require('./routes/index'),
+      conf           = require('./../daemon/lib/conf');
       // apiRouter      = require('./routes/api');
 
   /**
@@ -37,11 +38,24 @@ module.exports = function () {
       res.send(500, 'Something is broken!');
     });
 
+  var swigCache;
   if (isDevelopment) {
     app.use(logger('dev'));
     app.use(errorHandler());
-    swig.setDefaults({cache: false});
+    swigCache = false;
+  } else {
+    swigCache = 'memory';
   }
+
+  // set the config in the layout, to be "readable" from Angular
+  conf().read().then(function (config) {
+    swig.setDefaults({
+      cache: swigCache,
+      locals: {
+        config: JSON.stringify(config)
+      }
+    });
+  });
 
   return app;
 };

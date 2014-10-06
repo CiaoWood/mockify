@@ -90,11 +90,8 @@ module.exports = function () {
    */
   var _defaultConfig = function () {
     return {
-      daemon: {
-        port: 5000
-      },
       websocket: {
-        port: 5001
+        port: 5000
       },
       http: {
         port: 3000
