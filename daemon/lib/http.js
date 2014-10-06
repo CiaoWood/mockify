@@ -4,7 +4,7 @@
 
 'use strict';
 
-module.exports = (function () {
+module.exports = function (config) {
   var path      = require('path'),
       spawn     = require('child_process').spawn,
       Q         = require('q');
@@ -22,7 +22,8 @@ module.exports = (function () {
 
     } else {
       httpChild = spawn('node', [
-        path.join(__dirname, '..', '..', 'http', 'app.js')
+        path.join(__dirname, '..', '..', 'http', 'app.js'),
+        '--port=' + config.port
       ]);
 
       httpChild.stdout.on('data', function (data) {
@@ -62,4 +63,4 @@ module.exports = (function () {
     start: start,
     stop: stop
   };
-})();
+};

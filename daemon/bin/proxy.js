@@ -14,7 +14,7 @@ var httpProxy   = require('http-proxy'),
     _s          = require('underscore.string'),
     moment      = require('moment'),
     url         = require('url'),
-    db          = require('../lib/db'),
+    db          = require('../lib/db')(),
     targetId    = argv.targetId,
     exit        = function () { process.exit(1); };
 

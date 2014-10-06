@@ -1,6 +1,6 @@
-module.exports = (function () {
-  'use strict';
+'use strict';
 
+module.exports = (function () {
   /**
    * Return lodash extended with custom methods.
    */

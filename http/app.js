@@ -1,9 +1,11 @@
 'use strict';
 
-var mainApp = require('./main')(),
-    server  = require('http').Server(mainApp),
-    port = process.env.PORT || require('../config/config').web.port;
+module.exports = (function () {
+  var mainApp = require('./main')(),
+      server  = require('http').Server(mainApp),
+      argv    = require('minimist')(process.argv.slice(2));
 
-server.listen(port);
+  server.listen(argv.port);
 
-console.log('The http server is listening on port %s.', port);
+  console.log('The http server is listening on port %s.', argv.port);
+})();

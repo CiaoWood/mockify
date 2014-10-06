@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = (function () {
-  var db      = require('./../lib/db'),
+  var db      = require('./../lib/db')(),
       _       = require('./../lib/helper')._,
       Target  = require('./../entity/target');
 

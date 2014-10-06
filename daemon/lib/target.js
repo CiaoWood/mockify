@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function (rootDir) {
+module.exports = function () {
   var _               = require('lodash'),
       _s              = require('underscore.string'),
       Q               = require('q'),
@@ -249,7 +249,7 @@ module.exports = function (rootDir) {
    */
   var _startProxy = function (target) {
     var deferred = Q.defer(),
-        proxyBinPath = path.join(rootDir, 'bin', 'proxy.js');
+        proxyBinPath = path.join(__dirname, '..', 'bin', 'proxy.js');
 
     proxyChilds[target.id()] = spawn('node', [
       path.join(proxyBinPath),
@@ -289,7 +289,7 @@ module.exports = function (rootDir) {
    */
   var _startMock = function (target) {
     var deferred = Q.defer(),
-        mockBinPath = path.join(rootDir, 'bin', 'mock.js');
+        mockBinPath = path.join(__dirname, '..', 'bin', 'mock.js');
 
     mockChilds[target.id()] = spawn('node', [
       path.join(mockBinPath),

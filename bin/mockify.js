@@ -19,7 +19,7 @@ var program   = require('commander');
 
 var //fs        = require('fs'),
     program      = require('commander'),
-    mockify       = require('../mockify'),
+    mockify      = require('../mockify'),
     logHdlr      = require('./handler/log')(),
     alertHdlr    = require('./handler/alert')(),
     targetHdlr   = require('./handler/target')(),

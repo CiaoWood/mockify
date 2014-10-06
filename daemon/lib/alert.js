@@ -1,8 +1,6 @@
 'use strict';
 
-module.exports = function () {
-  var io              = require('./io');
-
+module.exports = function (io) {
   /**
    * Emit an info.
    */

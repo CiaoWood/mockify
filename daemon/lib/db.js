@@ -1,6 +1,6 @@
-module.exports = (function () {
-  'use strict';
+'use strict';
 
+module.exports = function () {
   var _         = require('./helper')._,
       _s        = require('underscore.string'),
       fs        = require('fs'),
@@ -168,4 +168,4 @@ module.exports = (function () {
       err && !_.isNull(err) && console.log(err);
     }
   };
-})();
+};

@@ -11,7 +11,7 @@ var argv        = require('minimist')(process.argv.slice(2)),
     express     = require('express'),
     bodyParser  = require('body-parser'),
     router      = express.Router(),
-    db          = require('../lib/db'),
+    db          = require('../lib/db')(),
     targetId    = argv.targetId;
 
 /**
