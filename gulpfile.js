@@ -235,7 +235,7 @@ gulp.task('_buildAssets', ['clean', '_buildCSS', '_buildJS'], function () {
           settings.buildDir + '/css/main.css'
         ), { read: false }),
         {
-          ignorePath: ['/http-build/static', '/www'],
+          ignorePath: ['/www-build/static', '/www'],
           addPrefix: '/static'
         }
       )
@@ -263,7 +263,7 @@ gulp.task('_compileAssets',
           settings.buildDir + '/css/main.css'
         ), { read: false }),
         {
-          ignorePath: ['/http-build/static', '/www'],
+          ignorePath: ['/www-build/static', '/www'],
           addPrefix: '/static'
         }
       )

@@ -5,7 +5,7 @@
 var settings = (function () {
   return {
     appName: 'mockify',
-    buildDir: 'http-build/static',
+    buildDir: 'www-build/static',
     serverFiles: [
       'bin/**/*.js',
       'daemon/**/*.js',
