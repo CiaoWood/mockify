@@ -7,7 +7,7 @@
     "status": "./node_modules/.bin/forever list"
   },
   "bin": {
-    "mockify": "./bin/mockify.js"
+    "mockify": "./cli/mockify.js"
   },
   "dependencies": {
     "body": "^4.5.0",
