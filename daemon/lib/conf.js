@@ -19,8 +19,7 @@ module.exports = function () {
         if (err.code === 'EEXIST') {
           // ignore the error if the folder already exists
           callback(null, mockifyDir);
-        }
-        else {
+        } else {
           callback(err);
         }
       } else {
@@ -55,8 +54,7 @@ module.exports = function () {
     fs.writeFile(mockifyConfFile, iniContent, function (err) {
       if (err) {
         callback(err);
-      }
-      else {
+      } else {
         callback(null);
       }
     });
@@ -73,16 +71,14 @@ module.exports = function () {
           _createMockifyConfFile(function (err) {
             if (!err) {
               _readMockifyRc(callback);
-            }
-            else {
+            } else {
               callback(err);
             }
           });
         } else {
           callback(err);
         }
-      }
-      else {
+      } else {
         callback(null, ini.parse(data));
       }
     });
