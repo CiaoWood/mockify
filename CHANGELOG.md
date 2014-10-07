@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## HEAD
+## 0.2.2
 
 - The configuration is read from ~/.mockifyrc
 - Daemon logs are in ~/.mockify
