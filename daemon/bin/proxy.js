@@ -77,13 +77,13 @@ var startProxy = function (target) {
     // don't send the cookies of localhost
     proxyReq._headers.cookie = '';
 
-    var message = _s.sprintf('[%s] %s%s -> %s%s',
+    var message = [
       req.method,
       req.headers.host,
       req.url,
       proxyReq._headers.host,
       proxyReq.path
-    );
+    ].join(';');
 
     // stdout captured by the main app
     logResponse(message);

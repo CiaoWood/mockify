@@ -12,7 +12,7 @@
   ])
 
   .config(function ($urlRouterProvider, $stateProvider) {
-    $urlRouterProvider.otherwise('/dashboard');
+    $urlRouterProvider.otherwise('/dashboard/responses');
 
     $stateProvider
       .state('app', {
@@ -44,5 +44,7 @@
         $state.go('app.dashboard');
       }
     });
+
+    $rootScope.$state = $state;
   }]);
 })();

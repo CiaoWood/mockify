@@ -1,11 +1,34 @@
-<h3>Responses</h3>
+<table class="table table-striped data">
+  <tbody>
+    <tr ng-repeat="log in logs track by $index">
+      <td>
+        <span
+          ng-if="log._source === 'proxy'"
+          ng-class="['log-' + log._source, 'log-' + log.type]">
+          <span class="label label-{{log._source}}"><a href="" set-to-search-box>{{log._status}}</a></span>
+          <span class="label label-primary"><a href="" set-to-search-box>{{log._host}}</a></span>
+          <span class="label label-primary"><a href="" set-to-search-box>{{log._url}}</a></span>
+          ->
+          <span class="label label-primary"><a href="" set-to-search-box>{{log._targetHost}}</a></span>
+          <span class="label label-primary"><a href="" set-to-search-box>{{log._url}}</a></span>
+        </span>
 
-<ul class="responses">
-  <li ng-repeat="log in logs track by $index">
-    <span ng-class="['log-' + log.source, 'log-' + log.type]">{{log.message}}</span>
-  </li>
+        <span
+          ng-if="log._type === 'mock'"
+          ng-class="['log-' + log.source, 'log-' + log.type]">
+          {{log.message}}
+        </span>
+      </td>
 
-  <li ng-show="!logs.length">
-    No response yet.
-  </li>
-</ul>
+      <td class="icon">
+        <span class="glyphicon glyphicon glyphicon-chevron-down" title="Show details"></span>
+      </td>
+
+      <td class="icon">
+        <span class="glyphicon glyphicon-edit" title="Edit response"></span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p ng-show="!logs.length">No response yet.</p>

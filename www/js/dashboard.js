@@ -3,7 +3,7 @@
 
   angular.module('mockify.dashboard', [
     'mockify.process',
-    'mockify.responses',
+    'mockify.leftPanel',
     'mockify.logs'
   ])
 
@@ -13,8 +13,8 @@
         url: 'dashboard',
         views: {
           primaryContainer: {
-            templateUrl: 'responses.html',
-            controller: 'ResponsesCtrl'
+            templateUrl: 'left-panel.html',
+            controller: 'LeftPanelCtrl'
           },
           secondaryContainer: {
             templateUrl: 'targets.html',
