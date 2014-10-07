@@ -3,7 +3,9 @@
 
   angular.module('mockify.leftPanel', [
     'mockify.service.webSocket',
-    'mockify.entity.response'
+    'mockify.entity.response',
+    'mockify.entity.record',
+    'truncate'
   ])
 
   .config(function ($urlRouterProvider, $stateProvider) {
@@ -72,11 +74,20 @@
   /**
    * Handle records in database.
    */
-  .controller('RecordsCtrl', ['$scope', 'webSocketService',
-    function ($scope, webSocket) {
-      $scope.content = 'RecordsCtrl';
+  .controller('RecordsCtrl', [
+    '$scope', 'webSocketService', 'recordFactory',
+    function ($scope, webSocket, Record) {
+      webSocket.emit('listRecords');
 
-      console.log(webSocket);
+      webSocket.on('listRecords', function (data) {
+        var records = _.map(data.records, function (record) {
+          return new Record(record);
+        });
+
+        $scope.$apply(function () {
+          $scope.records = records;
+        });
+      });
     }
   ])
 

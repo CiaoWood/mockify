@@ -19,6 +19,7 @@ var settings = (function () {
       'www/vendor/angular-ui-router/release/angular-ui-router.js',
       'www/vendor/angular-bootstrap-toggle-switch/angular-toggle-switch.js',
       'www/vendor/angular-perfect-scrollbar/src/angular-perfect-scrollbar.js',
+      'www/vendor/angular-truncate/src/truncate.js',
       'www/vendor/perfect-scrollbar/min/perfect-scrollbar.min.js',
       'www/vendor/lodash/dist/lodash.js',
       'www/vendor/underscore.string/lib/underscore.string.js'

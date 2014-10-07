@@ -6,9 +6,10 @@
 
 module.exports = (function () {
   var _               = require('lodash'),
+      conf            = require('./lib/conf'),
       db              = require('./lib/db')(),
       target          = require('./lib/target')(),
-      conf            = require('./lib/conf');
+      record          = require('./lib/record')();
 
   var initIO = function (io, http, alert) {
     // when childs are talking, send messages via websockets to the client
@@ -105,6 +106,15 @@ module.exports = (function () {
       socket.on('startMock', function (targetProperties) {
         target.startMock(targetProperties).then(function (childStdout) {
           io.emit('startMock', childStdout);
+        }, alert.error);
+      });
+
+      socket.on('listRecords', function () {
+        record.list().then(function (records) {
+          io.emit('listRecords', {
+            message: 'List of records:',
+            records: records
+          });
         }, alert.error);
       });
     });
