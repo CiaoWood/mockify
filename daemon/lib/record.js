@@ -24,13 +24,31 @@ module.exports = function () {
   };
 
   /**
-   * Remove a record.
-   * @param  {Object} recordProperties
+   * Update a record.
+   * @param  {Record} record
+   * @param  {Object} properties
    */
-  var remove = function (recordProperties) {
+  var update = function (properties) {
     var deferred = Q.defer();
 
-    recordStorage.remove(new Record(recordProperties), function (err) {
+    recordStorage.update(new Record(properties), properties,
+      function (err) {
+        err && deferred.reject(err);
+        deferred.resolve('The record has been updated.');
+      }
+    );
+
+    return deferred.promise;
+  };
+
+  /**
+   * Remove a record.
+   * @param  {Object} properties
+   */
+  var remove = function (properties) {
+    var deferred = Q.defer();
+
+    recordStorage.remove(new Record(properties), function (err) {
       err && deferred.reject(err) ||
         deferred.resolve('The record has been removed.');
     });
@@ -40,6 +58,7 @@ module.exports = function () {
 
   return {
     list: list,
+    update: update,
     remove: remove
   };
 };

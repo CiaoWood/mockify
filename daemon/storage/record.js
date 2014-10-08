@@ -18,6 +18,24 @@ module.exports = (function () {
   };
 
   /**
+   * Update a record in database.
+   * @param  {Record}   record
+   * @param  {Object}   properties
+   * @param  {Function} callback
+   */
+  var update = function (record, properties, callback) {
+    db.model('Record').get(record.id(), function (err, record_) {
+      if (record_) {
+        _.merge(record_, properties);
+
+        record_.save(function (err, row) {
+          callback(err, !err && new Record(row));
+        });
+      }
+    });
+  };
+
+  /**
    * Remove a record in database.
    * @param  {record}   record
    * @param  {Function} callback
@@ -28,6 +46,7 @@ module.exports = (function () {
 
   return {
     list: list,
+    update: update,
     remove: remove
   };
 })();

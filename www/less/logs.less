@@ -1,34 +1,44 @@
-ul.logs, ul.responses {
-  span {
-    &.log-mock {
-      color: @mock-color;
+div.logs-container {
+  background: #242429;
+  position: fixed !important;
+  bottom: 0;
+  z-index: 1;
+  max-height: 200px;
+  width: 100%;
+  padding: 0 10px;
+
+  ul.logs, ul.responses {
+    span {
+      &.log-mock {
+        color: @mock-color;
+      }
+
+      &.log-proxy {
+        color: @proxy-color;
+      }
+
+      &.log-error {
+        color: red !important;
+      }
     }
 
-    &.log-proxy {
-      color: @proxy-color;
-    }
-
-    &.log-error {
-      color: red !important;
-    }
+    // no margin to fix the perfect-scrollbar height
+    margin: 0;
   }
 
-  // no margin to fix the perfect-scrollbar height
-  margin: 0;
-}
+  .scroller {
+    max-height: 100px;
+    overflow-y: hidden;
+    position: relative;
+    padding: 0;
+    margin: 0;
+  }
 
-.scroller {
-  max-height: 100px;
-  overflow-y: hidden;
-  position: relative;
-  padding: 0;
-  margin: 0;
-}
-
-/**
- * Hack to get a tiny space between the log and the bottom of the page.
- * A margin of the perfect-scrollbar causes a scroll bar too height.
- */
-.spacer {
-  height: 10px;
+  /**
+   * Hack to get a tiny space between the log and the bottom of the page.
+   * A margin of the perfect-scrollbar causes a scroll bar too height.
+   */
+  .spacer {
+    height: 10px;
+  }
 }

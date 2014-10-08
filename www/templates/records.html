@@ -17,22 +17,49 @@
     </tr>
 
     <tr ng-repeat="record in records track by $index">
-      <td>{{record._status}}</td>
-      <td>{{record._url}}</td>
-      <td>{{record._method}}</td>
-      <td>{{record.body() | characters:80 :true}}</td>
+      <td ng-if="record.details" colspan="7">
+        <perfect-scrollbar class="scroller" suppress-scroll-x="true" wheel-propagation="true" wheel-speed="5">
+          <form class="form-horizontal" role="form">
+            <div class="form-group" ng-repeat="key in record.details.keys">
+              <label class="col-sm-2 control-label">{{key}}</label>
+              <div class="col-sm-9">
+                <input ng-if="!record.details.jsonValues[$index]"
+                  ng-model="record[key]"
+                  type="text"
+                  class="form-control"
+                  value="{{record.details.values[$index]}}" />
 
-      <td>
-        <span class="glyphicon glyphicon glyphicon-chevron-down" title="Show details"></span>
+                <textarea ng-if="record.details.jsonValues[$index]" ng-model="record[key]">{{record.details.values[$index]}}</textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default" ng-click="validRecordEdition(record)">OK</button>
+              </div>
+            </div>
+          </form>
+        </perfect-scrollbar>
       </td>
 
-      <td>
+      <td ng-if="!record.details">{{record._status}}</td>
+      <td ng-if="!record.details">{{record._url}}</td>
+      <td ng-if="!record.details">{{record._method}}</td>
+      <td ng-if="!record.details">{{record.body() | characters:80 :true}}</td>
+
+      <td ng-if="!record.details">
+        <span
+          ng-class="{'glyphicon glyphicon glyphicon-chevron-down': record.opened, 'glyphicon glyphicon-chevron-right': !record.opened}"
+          ng-click="toggleRecordDetails(record, $index)"
+          title="Show details"></span>
+      </td>
+
+      <td ng-if="!record.details">
         <span class="glyphicon glyphicon-edit" title="Edit record"></span>
       </td>
 
-      <td>
+      <td ng-if="!record.details">
         <span class="glyphicon glyphicon-remove" title="Remove record"
-          ng-click="removeRecord(record._id)"></span>
+          ng-click="removeRecord(record)"></span>
       </td>
     </tr>
   </tbody>

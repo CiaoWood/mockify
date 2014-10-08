@@ -90,12 +90,66 @@
       webSocket.emit('listRecords');
       webSocket.on('listRecords', listRecords);
 
+      /**
+       * List all records.
+       */
       $scope.listRecords = function () {
         webSocket.emit('listRecords');
       };
 
-      $scope.removeRecord = function (recordId) {
-        webSocket.emit('removeRecord', {id: recordId});
+      /**
+       * Insert the details of a record in the list of records.
+       * @param  {Record} record    the clicked record
+       * @param  {Number} index     position to insert the details
+       */
+      $scope.toggleRecordDetails = function (record, index) {
+        record.opened = !record.opened;
+
+        // save the index in the result
+        record.index = index;
+
+        if (record.opened) {
+          // clone and flag the new record to display a verbose row
+          var clonedRecord = _.cloneDeep(record);
+          var jsonValues =
+            ['_body', '_reqHeaders', '_resHeaders', '_parameters'];
+
+          clonedRecord.details = {
+            // keys: _.keys(_.publicProperties(clonedRecord)),
+            keys: _.keys(clonedRecord),
+            values: _.map(_.values(clonedRecord), function (value) {
+              var ret = value;
+              if (_.isObject(value)) {
+                ret = JSON.stringify(value, null, 2);
+              }
+              return ret;
+            }),
+            jsonValues: _.map(_.keys(clonedRecord), function (k) {
+              return _.contains(jsonValues, k);
+            })
+          };
+
+          // insert the details
+          $scope.records.splice(record.index + 1, 0, clonedRecord);
+        } else {
+          // remove the details
+          $scope.records.splice(record.index + 1, 1);
+        }
+      };
+
+      /**
+       * Remove a record.
+       */
+      $scope.removeRecord = function (record) {
+        webSocket.emit('removeRecord', record);
+      };
+
+      /**
+       * Edit the record and 'close' the details.
+       */
+      $scope.validRecordEdition = function (record) {
+        webSocket.emit('updateRecord', _.publicProperties(record));
+        $scope.toggleRecordDetails(record, record.index);
       };
     }
   ])
