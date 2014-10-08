@@ -12,11 +12,15 @@
   </thead>
 
   <tbody>
+    <tr ng-show="!records.length">
+      <td colspan="7">No record yet.</td>
+    </tr>
+
     <tr ng-repeat="record in records track by $index">
       <td>{{record._status}}</td>
       <td>{{record._url}}</td>
       <td>{{record._method}}</td>
-      <td>{{record.body() | characters:50 :true}}</td>
+      <td>{{record.body() | characters:80 :true}}</td>
 
       <td class="icon">
         <span class="glyphicon glyphicon glyphicon-chevron-down" title="Show details"></span>
@@ -32,5 +36,3 @@
     </tr>
   </tbody>
 </table>
-
-<p ng-show="!records.length">No record yet.</p>
