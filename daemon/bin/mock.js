@@ -35,8 +35,8 @@ var logResponse = function (message) {
 var runApp = function (target, db) {
   var mockData = (function () {
     return function (req, res) {
-      // search a response for the current query
-      db.model('Response').find({
+      // search a record for the current query
+      db.model('Record').find({
         method: req.method,
         url: req.url,
         parameters: JSON.stringify(req.body),

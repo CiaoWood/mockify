@@ -17,7 +17,7 @@ module.exports = function () {
       exists    = fs.existsSync(absFile),
       models    = require('./models'),
       schemas   = [
-        'CREATE  TABLE "main"."response"' +
+        'CREATE  TABLE "main"."record"' +
         ' ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,' +
         // index on uuid to improve speed
         ' "uuid" VARCHAR UNIQUE NOT NULL,' +

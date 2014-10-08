@@ -3,11 +3,11 @@
 module.exports = (function () {
   return {
     /**
-     * Response model
+     * Record model
      */
-    Response: function (db) {
+    Record: function (db) {
       /* jscs:disable disallowSpaceAfterObjectKeys */
-      return db.define('response', {
+      return db.define('Record', {
         uuid        : String,
         dateCreated : Date,
         status      : Number,

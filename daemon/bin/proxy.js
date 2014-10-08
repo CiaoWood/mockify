@@ -106,7 +106,7 @@ var startProxy = function (target) {
           targetId: targetId
         };
 
-        db.model('Response').create([data], function (err) {
+        db.model('Record').create([data], function (err) {
           if (err) {
             logError('An error has occurred ' + err);
           }
@@ -132,7 +132,7 @@ var startProxy = function (target) {
 
       var megaBuffer = Buffer.concat(buffers);
 
-      db.model('Response').find({uuid: uuid}, function (err, responses) {
+      db.model('Record').find({uuid: uuid}, function (err, responses) {
         var response = _.first(responses);
 
         // if response found, update headers and body
