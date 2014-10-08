@@ -35,6 +35,15 @@ module.exports = (function () {
       }, alert.error);
     };
 
+    var listRecords = function () {
+      record.list().then(function (records) {
+        io.emit('listRecords', {
+          message: 'List of records:',
+          records: records
+        });
+      }, alert.error);
+    };
+
     // send to the client the list of targets every X seconds
     setInterval(listTargets, 3000);
 
@@ -109,12 +118,11 @@ module.exports = (function () {
         }, alert.error);
       });
 
-      socket.on('listRecords', function () {
-        record.list().then(function (records) {
-          io.emit('listRecords', {
-            message: 'List of records:',
-            records: records
-          });
+      socket.on('listRecords', listRecords);
+
+      socket.on('removeRecord', function (recordProperties) {
+        record.remove(recordProperties).then(function (msgLog) {
+          listRecords();
         }, alert.error);
       });
     });

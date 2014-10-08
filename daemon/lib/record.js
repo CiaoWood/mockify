@@ -2,10 +2,11 @@
 
 module.exports = function () {
   var Q               = require('q'),
+      Record          = require('./../entity/record'),
       recordStorage   = require('./../storage/record');
 
   /**
-   * Emit a ws with the list of records.
+   * List all records.
    */
   var list = function () {
     var deferred = Q.defer();
@@ -22,7 +23,23 @@ module.exports = function () {
     return deferred.promise;
   };
 
+  /**
+   * Remove a record.
+   * @param  {Object} recordProperties
+   */
+  var remove = function (recordProperties) {
+    var deferred = Q.defer();
+
+    recordStorage.remove(new Record(recordProperties), function (err) {
+      err && deferred.reject(err) ||
+        deferred.resolve('The record has been removed.');
+    });
+
+    return deferred.promise;
+  };
+
   return {
-    list: list
+    list: list,
+    remove: remove
   };
 };

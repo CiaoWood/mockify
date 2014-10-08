@@ -77,9 +77,7 @@
   .controller('RecordsCtrl', [
     '$scope', 'webSocketService', 'recordFactory',
     function ($scope, webSocket, Record) {
-      webSocket.emit('listRecords');
-
-      webSocket.on('listRecords', function (data) {
+      var listRecords = function (data) {
         var records = _.map(data.records, function (record) {
           return new Record(record);
         });
@@ -87,7 +85,18 @@
         $scope.$apply(function () {
           $scope.records = records;
         });
-      });
+      };
+
+      webSocket.emit('listRecords');
+      webSocket.on('listRecords', listRecords);
+
+      $scope.listRecords = function () {
+        webSocket.emit('listRecords');
+      };
+
+      $scope.removeRecord = function (recordId) {
+        webSocket.emit('removeRecord', {id: recordId});
+      };
     }
   ])
 

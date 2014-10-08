@@ -23,7 +23,7 @@ module.exports = function () {
   };
 
   /**
-   * Emit a ws with the list of targets.
+   * List all targets.
    */
   var list = function () {
     var deferred = Q.defer();
@@ -58,7 +58,7 @@ module.exports = function () {
   };
 
   /**
-   * Add a target and emit a ws with the list of targets.
+   * Add a target.
    * @param  {Object} targetProperties
    */
   var add = function (targetProperties) {
@@ -77,7 +77,7 @@ module.exports = function () {
   };
 
   /**
-   * Disable the target, remove it and emit a ws with the message status
+   * Remove a target.
    * @param  {Object} targetProperties
    */
   var remove = function (targetProperties) {

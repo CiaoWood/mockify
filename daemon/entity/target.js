@@ -15,22 +15,6 @@ module.exports = (function () {
     this._enabled = false;
 
     _.privateMerge(this, properties);
-
-    // // set to true if some childs are started
-    // this._isRunning = _.has(proxyChilds, this._id);
-    // this._isMocked = _.has(mockChilds, this._id);
-
-    // // enable the proxy if proxy or mock is running
-    // this._isEnabled = this._isRunning || this._isMocked;
-
-    // // update the disable flag in DB
-    // db.model('Proxy').get(this._id, function (err, Proxy) {
-    //   if (Proxy) {
-    //     Proxy.isEnabled = self._isEnabled;
-    //     Proxy.save(db.log);
-    //   }
-    // });
-    //
   };
 
   Target.prototype.id = function () {

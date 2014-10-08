@@ -1,13 +1,13 @@
 <table class="table table-striped data">
   <thead>
     <tr>
-      <th>Status</th>
-      <th>URL</th>
-      <th>Method</th>
+      <th width="50px">Status</th>
+      <th width="20%">URL</th>
+      <th width="20%">Method</th>
       <th>Body</th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th class="icon"></th>
+      <th class="icon"></th>
+      <th class="icon"><span class="glyphicon glyphicon-refresh" ng-click="listRecords()"></span></th>
     </tr>
   </thead>
 
@@ -22,16 +22,17 @@
       <td>{{record._method}}</td>
       <td>{{record.body() | characters:80 :true}}</td>
 
-      <td class="icon">
+      <td>
         <span class="glyphicon glyphicon glyphicon-chevron-down" title="Show details"></span>
       </td>
 
-      <td class="icon">
+      <td>
         <span class="glyphicon glyphicon-edit" title="Edit record"></span>
       </td>
 
-      <td class="icon">
-        <span class="glyphicon glyphicon-remove" title="Delete record"></span>
+      <td>
+        <span class="glyphicon glyphicon-remove" title="Remove record"
+          ng-click="removeRecord(record._id)"></span>
       </td>
     </tr>
   </tbody>

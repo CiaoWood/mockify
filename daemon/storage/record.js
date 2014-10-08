@@ -6,7 +6,7 @@ module.exports = (function () {
       Record  = require('./../entity/record');
 
   /**
-   * List targets.
+   * List records.
    * @param  {Function} callback
    */
   var list = function (callback) {
@@ -17,7 +17,17 @@ module.exports = (function () {
     });
   };
 
+  /**
+   * Remove a record in database.
+   * @param  {record}   record
+   * @param  {Function} callback
+   */
+  var remove = function (record, callback) {
+    db.model('Record').find({id: record.id()}).remove(callback);
+  };
+
   return {
-    list: list
+    list: list,
+    remove: remove
   };
 })();
