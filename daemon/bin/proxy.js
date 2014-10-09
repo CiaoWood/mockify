@@ -129,10 +129,9 @@ var startProxy = function (target) {
     });
 
     res.on('end', function () {
-      var res_ = this.req.res;
-      var uuid = this.req._headers['x-mockify-rowuuid'];
-
-      var megaBuffer = Buffer.concat(buffers);
+      var res_ = this.req.res,
+          uuid = this.req._headers['x-mockify-rowuuid'],
+          megaBuffer = Buffer.concat(buffers);
 
       db.model('Record').find({uuid: uuid}, function (err, responses) {
         var response = _.first(responses);
@@ -146,12 +145,34 @@ var startProxy = function (target) {
           // be sure to have a complete response before saving it
           if (response.resHeaders && response.status && response.body) {
             response.save(function (err) {
-              if (err) {
-                logError('An error has occurred. ' + err);
-              }
+              err && logError('An error has occurred. ' + err);
             });
           }
         }
+      });
+    });
+  });
+
+  // if there is no response, the 'proxyRes' event is not triggered.
+  // so we retrieve the statusCode here.
+  proxy.on('end', function (req, res, proxyRes) {
+    // do nothing if not recording the target
+    if (!target.recording) {
+      return;
+    }
+
+    var uuid = proxyRes.req._headers['x-mockify-rowuuid'];
+
+    db.model('Record').find({uuid: uuid}, function (err, responses) {
+      var response = _.first(responses);
+
+      // if response found, update status code
+      if (response) {
+        response.status = proxyRes.statusCode;
+      }
+
+      response.save(function (err) {
+        err && logError('An error has occurred. ' + err);
       });
     });
   });
