@@ -6,14 +6,13 @@
       <th width="20%">Method</th>
       <th>Body</th>
       <th class="icon"></th>
-      <th class="icon"></th>
       <th class="icon"><span class="glyphicon glyphicon-refresh" ng-click="listRecords()"></span></th>
     </tr>
   </thead>
 
   <tbody>
     <tr ng-show="!records.length">
-      <td colspan="7">No record yet.</td>
+      <td colspan="6">No record yet.</td>
     </tr>
 
     <tr ng-repeat="record in records track by $index">
@@ -57,10 +56,6 @@
           ng-class="{'glyphicon glyphicon glyphicon-chevron-down': record.opened, 'glyphicon glyphicon-chevron-right': !record.opened}"
           ng-click="toggleRecordDetails(record, $index)"
           title="Show details"></span>
-      </td>
-
-      <td ng-if="!record.details">
-        <span class="glyphicon glyphicon-edit" title="Edit record"></span>
       </td>
 
       <td ng-if="!record.details">
