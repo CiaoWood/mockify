@@ -10,8 +10,8 @@ module.exports = function () {
       methodOverride = require('method-override'),
       errorHandler   = require('errorhandler'),
       indexRouter    = require('./routes/index'),
-      conf           = require('./../daemon/lib/conf');
-      // apiRouter      = require('./routes/api');
+      conf           = require('./../daemon/lib/conf'),
+      apiRouter      = require('./routes/api');
 
   /**
    * Express configuration.
@@ -29,7 +29,7 @@ module.exports = function () {
     .use(methodOverride())
     .use(express.static(path.join(__dirname, '..', 'www-build')))
     .use(indexRouter)
-    // .use('/api', apiRouter)
+    .use('/api', apiRouter)
     .use(function (req, res) {
       res.status(404).render('404', {title: 'Not Found :('});
     })

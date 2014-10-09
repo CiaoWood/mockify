@@ -16,48 +16,48 @@ module.exports = (function () {
   /**
    * @FIXME
    */
-  function listProxies(req, res) {
+  function listTargets(req, res) {
     notImplementedYet(res);
   }
 
   /**
    * @FIXME
    */
-  function getProxy(req, res) {
+  function getTarget(req, res) {
     notImplementedYet(res);
   }
 
   /**
    * @FIXME
    */
-  function createProxy(req, res) {
+  function createTarget(req, res) {
     notImplementedYet(res);
   }
 
   /**
    * @FIXME
    */
-  function updateProxy(req, res) {
+  function updateTarget(req, res) {
     notImplementedYet(res);
   }
 
   /**
    * @FIXME
    */
-  function removeProxy(req, res) {
+  function removeTarget(req, res) {
     notImplementedYet(res);
   }
 
   apiRouter.route('/').get(index);
 
-  apiRouter.route('/proxies')
-    .get(listProxies)
-    .post(createProxy);
+  apiRouter.route('/targets')
+    .get(listTargets)
+    .post(createTarget);
 
-  apiRouter.route('/proxies/:id')
-    .get(getProxy)
-    .put(updateProxy)
-    .delete(removeProxy);
+  apiRouter.route('/targets/:id')
+    .get(getTarget)
+    .put(updateTarget)
+    .delete(removeTarget);
 
   return apiRouter;
 })();
