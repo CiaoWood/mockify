@@ -13,7 +13,7 @@ module.exports = function (io) {
    */
   var error = function (message) {
     message = message || 'An unknown error has occurred :(';
-    io.emit('alertError', {message: message});
+    io.emit('alert', {message: message});
   };
 
   return {

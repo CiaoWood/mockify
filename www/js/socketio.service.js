@@ -14,12 +14,12 @@
       // check that the websocket server is up every X secs
       $interval(function () {
         if (!socket.connected) {
-          $rootScope.$emit('alertError', {
-            message: 'Websocket server has gone away!'
-          });
-        } else {
-          $rootScope.$emit('hideAlert');
+          $rootScope.alertError('Websocket server has gone away!');
         }
+        // } else {
+          // @TOFIX Unhide only 'Websocket server has gone away!' errors...
+          // $rootScope.$emit('hideAlert');
+        // }
       }, 10000);
 
       return {

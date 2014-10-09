@@ -8,25 +8,47 @@
   /**
    * Handle alerts.
    */
-  .controller('AlertCtrl', ['$rootScope', '$scope', 'webSocketService',
-    function ($rootScope, $scope, webSocket) {
+  .controller('AlertCtrl', [
+    '$rootScope', '$scope', '$interval', 'webSocketService',
+    function ($rootScope, $scope, $interval, webSocket) {
+      $scope.restartLoopHideAlertId;
       $scope.showAlert = false;
 
-      var saveDataToScope = function (data) {
+      // restart the 'hide loop' when a alert is displayed
+      var restartLoopHideAlert = function () {
+        $interval.cancel($scope.restartLoopHideAlertId);
+
+        // hide alerts every X seconds
+        $scope.restartLoopHideAlertId = $interval(function () {
+          $scope.hideAlert();
+        }, 10000);
+      };
+
+      /**
+       * Save data in scope and restart the hide loop.
+       */
+      var saveAlert = function (data) {
         $scope.type = data.type || 'danger';
         $scope.strong = data.strong;
         $scope.message = data.message;
         $scope.showAlert = true;
+        restartLoopHideAlert();
       };
 
-      webSocket.on('alertError', function (data) {
+      /**
+       * Display alert received via websockets.
+       */
+      webSocket.on('alert', function (data) {
         $scope.$apply(function () {
-          saveDataToScope(data);
+          saveAlert(data);
         });
       });
 
-      $rootScope.$on('alertError', function (e, data) {
-        saveDataToScope(data);
+      /**
+       * Listen even of the webapp.
+       */
+      $rootScope.$on('alert', function (e, data) {
+        saveAlert(data);
       });
 
       $rootScope.$on('hideAlert', function () {
@@ -34,7 +56,7 @@
       });
 
       /**
-       * Shortcut global method to push an error alert.
+       * Root method to push an error alert.
        * @param  {String|Object} data
        */
       $rootScope.alertError = function (data) {
@@ -42,11 +64,11 @@
           data = {message: data};
         }
 
-        $rootScope.$broadcast('alertError', data);
+        $rootScope.$broadcast('alert', data);
       };
 
       /**
-       * Shortcut global method to push an info alert.
+       * Root method to push an info alert.
        * @param  {String|Object} data
        */
       $rootScope.alertInfo = function (data) {
@@ -56,7 +78,14 @@
 
         data.type = 'info';
 
-        $rootScope.$broadcast('alertError', data);
+        $rootScope.$broadcast('alert', data);
+      };
+
+      /**
+       * Root method to hide the current alert.
+       */
+      $rootScope.hideAlert = function () {
+        $rootScope.$broadcast('hideAlert');
       };
     }
   ]);
