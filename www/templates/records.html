@@ -46,7 +46,9 @@
         </perfect-scrollbar>
       </td>
 
-      <td ng-if="!record.details">{{record._status}}</td>
+      <td ng-if="!record.details">
+        <span class="label label-status label-{{record._status}}">{{record._status}}</span>
+      </td>
       <td ng-if="!record.details">{{record._url}}</td>
       <td ng-if="!record.details">{{record._method}}</td>
       <td ng-if="!record.details">{{record.body() | characters:80 :true}}</td>

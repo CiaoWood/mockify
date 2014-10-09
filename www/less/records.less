@@ -9,7 +9,7 @@ table.data {
   margin: 0 0 15px 0;
   padding: 0;
 
-  td.icon {
+  th.icon, td.icon {
     width: 40px;
   }
 
@@ -21,11 +21,27 @@ table.data {
   .label {
     font-size: 90%;
 
-    &.label-proxy {
-      background-color: @proxy-color;
+    &.label-status {
+      color: black;
 
       a {
         color: black !important;
+      }
+
+      &.label-200, &.label-201, &.label-202, &.label-203, &.label-204 {
+        background-color: #20FF58;
+      }
+
+      &.label-300, &.label-301, &.label-302, &.label-303, &.label-304 {
+        background-color: #ffb03d;
+      }
+
+      &.label-400, &.label-401, &.label-402, &.label-403, &.label-404 {
+        background-color: #ffb03d;
+      }
+
+      &.label-500, &.label-501, &.label-502, &.label-503, &.label-504 {
+        background-color: red;
       }
     }
   }

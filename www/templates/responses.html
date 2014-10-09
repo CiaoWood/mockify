@@ -1,34 +1,44 @@
 <table class="table table-striped data">
+  <thead>
+    <th class="icon">Who</th>
+    <th>Target response</th>
+    <th class="icon"></th>
+  </thead>
+
   <tbody>
     <tr ng-repeat="log in logs track by $index">
       <td>
-        <span
-          ng-if="log._source === 'proxy'"
-          ng-class="['log-' + log._source, 'log-' + log.type]">
-          <span class="label label-{{log._source}}"><a href="" set-to-search-box>{{log._status}}</a></span>
+        <span class="glyphicon glyphicon-th-list" ng-class="['log-' + log._source, 'log-' + log.type]" title="{{log._source}}"></span>
+      </td>
+
+      <td>
+        <span ng-if="log._source === 'proxy'">
+          <span class="label label-status label-{{log._status}}"><a href="" set-to-search-box>{{log._status}}</a></span>
+          <span class="label label-primary"><a href="" set-to-search-box>{{log._method}}</a></span>
           <span class="label label-primary"><a href="" set-to-search-box>{{log._host}}</a></span>
           <span class="label label-primary"><a href="" set-to-search-box>{{log._url}}</a></span>
-          ->
+
+          <span class="glyphicon glyphicon-arrow-right"></span>
+
           <span class="label label-primary"><a href="" set-to-search-box>{{log._targetHost}}</a></span>
           <span class="label label-primary"><a href="" set-to-search-box>{{log._url}}</a></span>
         </span>
 
-        <span
-          ng-if="log._type === 'mock'"
-          ng-class="['log-' + log.source, 'log-' + log.type]">
-          {{log.message}}
+        <span ng-if="log._source === 'mock'">
+          <span class="label label-status label-{{log._status}}"><a href="" set-to-search-box>{{log._status}}</a></span>
+          <span class="label label-primary"><a href="" set-to-search-box>{{log._method}}</a></span>
+          <span class="label label-primary"><a href="" set-to-search-box>{{log._host}}</a></span>
+          <span class="label label-primary"><a href="" set-to-search-box>{{log._url}}</a></span>
         </span>
       </td>
 
-      <td class="icon">
-        <span class="glyphicon glyphicon glyphicon-chevron-down" title="Show details"></span>
+      <td>
+        <span class="glyphicon glyphicon-chevron-right" title="Show details"></span>
       </td>
+    </tr>
 
-      <td class="icon">
-        <span class="glyphicon glyphicon-edit" title="Edit response"></span>
-      </td>
+    <tr ng-if="!logs.length">
+      <td colspan="3">No response yet.</td>
     </tr>
   </tbody>
 </table>
-
-<p ng-show="!logs.length">No response yet.</p>

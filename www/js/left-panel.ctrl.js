@@ -54,13 +54,18 @@
    * Handle responses from child processes.
    */
   .controller('ResponsesCtrl', [
-    '$scope', 'webSocketService', 'proxyResponseFactory',
-    function ($scope, webSocket, ProxyResponse) {
+    '$scope', 'webSocketService', 'proxyResponseFactory', 'mockResponseFactory',
+    function ($scope, webSocket, ProxyResponse, MockResponse) {
       _.forEach(['proxy', 'mock'], function (eventSource) {
         webSocket.on(eventSource + 'Response', function (logData) {
           var log = logData;
+
           if (logData.source === 'proxy') {
             log = new ProxyResponse(logData.message);
+          }
+
+          if (logData.source === 'mock') {
+            log = new MockResponse(logData.message);
           }
 
           $scope.$apply(function () {

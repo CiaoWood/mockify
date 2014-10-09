@@ -56,8 +56,6 @@ var startProxy = function (target) {
 
   server.listen(target.port);
 
-
-
   // To modify the proxy connection before data is sent, you can listen
   // for the 'proxyReq' event. When the event is fired, you will receive
   // the following arguments:
@@ -78,17 +76,6 @@ var startProxy = function (target) {
 
     // don't send the cookies of localhost
     proxyReq._headers.cookie = '';
-
-    var message = [
-      req.method,
-      req.headers.host,
-      req.url,
-      proxyReq._headers.host,
-      proxyReq.path
-    ].join(';');
-
-    // stdout captured by the main app
-    logResponse(message);
 
     // save the response only if recording the target
     if (target.recording) {
@@ -175,6 +162,18 @@ var startProxy = function (target) {
         err && logError('An error has occurred. ' + err);
       });
     });
+
+    var message = [
+      proxyRes.statusCode,
+      req.method,
+      req.headers.host,
+      req.url,
+      proxyRes.req._headers.host,
+      req.url
+    ].join(';');
+
+    // stdout captured by the main app
+    logResponse(message);
   });
 };
 
