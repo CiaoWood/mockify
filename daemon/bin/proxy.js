@@ -39,14 +39,6 @@ var logResponse = function (message) {
  * @param  {url_} url_  Url to proxy
  */
 var startProxy = function (target) {
-  var server = require('http').createServer(function (req, res) {
-    // You can define here your custom logic to handle the request
-    // and then proxy the request.
-    proxy.web(req, res, {target: target.url});
-  });
-
-  server.listen(target.port);
-
   log(_s.sprintf('Proxy listening on localhost:%s and proxying %s',
     target.port, target.url));
 
@@ -55,6 +47,16 @@ var startProxy = function (target) {
     secure: false,
     xfwd: true
   });
+
+  var server = require('http').createServer(function (req, res) {
+    // You can define here your custom logic to handle the request
+    // and then proxy the request.
+    proxy.web(req, res, {target: target.url});
+  });
+
+  server.listen(target.port);
+
+
 
   // To modify the proxy connection before data is sent, you can listen
   // for the 'proxyReq' event. When the event is fired, you will receive
