@@ -121,7 +121,9 @@ module.exports = (function () {
       socket.on('listRecords', listRecords);
 
       socket.on('updateRecord', function (recordProperties) {
-        record.update(recordProperties).then(alert.info, alert.error);
+        record.update(recordProperties).then(function (msgLog) {
+          io.emit('updateRecord', msgLog);
+        }, alert.error);
       });
 
       socket.on('removeRecord', function (recordProperties) {

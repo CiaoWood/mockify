@@ -20,21 +20,27 @@
       <td ng-if="record.details" colspan="7">
         <perfect-scrollbar class="scroller" suppress-scroll-x="true" wheel-propagation="true" wheel-speed="5">
           <form class="form-horizontal" role="form">
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-success" ng-click="validRecordEdition(record, $index)">OK</button>
+              </div>
+            </div>
+
             <div class="form-group" ng-repeat="key in record.details.keys">
               <label class="col-sm-2 control-label">{{key}}</label>
               <div class="col-sm-9">
                 <input ng-if="!record.details.jsonValues[$index]"
-                  ng-model="record[key]"
+                  ng-model="record.details.values[$index]"
                   type="text"
-                  class="form-control"
-                  value="{{record.details.values[$index]}}" />
+                  class="form-control" />
 
-                <textarea ng-if="record.details.jsonValues[$index]" ng-model="record[key]">{{record.details.values[$index]}}</textarea>
+                <textarea ng-if="record.details.jsonValues[$index]" ng-model="record.details.values[$index]"></textarea>
               </div>
             </div>
+
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default" ng-click="validRecordEdition(record)">OK</button>
+                <button type="submit" class="btn btn-success" ng-click="validRecordEdition(record, $index)">OK</button>
               </div>
             </div>
           </form>

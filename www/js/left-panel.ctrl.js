@@ -114,6 +114,9 @@
           var jsonValues =
             ['_body', '_reqHeaders', '_resHeaders', '_parameters'];
 
+          delete clonedRecord.opened;
+          delete clonedRecord.index;
+
           clonedRecord.details = {
             // keys: _.keys(_.publicProperties(clonedRecord)),
             keys: _.keys(clonedRecord),
@@ -147,9 +150,41 @@
       /**
        * Edit the record and 'close' the details.
        */
-      $scope.validRecordEdition = function (record) {
-        webSocket.emit('updateRecord', _.publicProperties(record));
-        $scope.toggleRecordDetails(record, record.index);
+      $scope.validRecordEdition = function (clonedRecord, index) {
+        var error = false;
+
+        // convert JSON to object
+        _.map(clonedRecord.details.keys, function (key, i) {
+          if (clonedRecord.details.jsonValues[i]) {
+            try {
+              JSON.parse(clonedRecord.details.values[i]);
+            }
+            catch (err) {
+              error = true;
+              $scope.alertError(
+                'The value of the ' + key +
+                ' property in not a valid JSON structure.');
+            }
+          }
+        });
+
+        if (!error) {
+          // we want to collapse the previous record
+          index--;
+
+          var properties = {};
+          _.map(clonedRecord.details.keys, function (keys, i) {
+            properties[keys] = clonedRecord.details.values[i];
+          });
+
+          webSocket.emit('updateRecord', _.publicProperties(properties));
+          webSocket.on('updateRecord', function (msgLog) {
+            $scope.alertInfo(msgLog);
+            $scope.listRecords();
+          });
+
+          $scope.toggleRecordDetails($scope.records[index], index);
+        }
       };
     }
   ])
