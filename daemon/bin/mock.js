@@ -51,6 +51,7 @@ var runApp = function (target, db) {
           if (!response) {
             response.status = 404;
             res.status(404).send('No response has been found.');
+
           } else {
             // set headers
             _.forEach(response.resHeaders, function (value, key) {
@@ -62,16 +63,16 @@ var runApp = function (target, db) {
             res
               .status(response.status || 500)
               .send(response.body || 'empty body');
+
+            var message = [
+              response.status,
+              response.method,
+              'localhost:' + target.port,
+              response.url
+            ].join(';');
+
+            logResponse(message);
           }
-
-          var message = [
-            response.status,
-            response.method,
-            'localhost:' + target.port,
-            response.url
-          ].join(';');
-
-          logResponse(message);
         }
       });
     };
