@@ -16,7 +16,9 @@ var httpProxy   = require('http-proxy'),
     url         = require('url'),
     db          = require('../lib/db')(),
     targetId    = argv.targetId,
-    exit        = function () { process.exit(1); };
+    exit        = function () { process.exit(1); },
+
+    responsesToHandle   = {};
 
 /**
  * Write log on stdout.
@@ -32,6 +34,54 @@ var logError = function (message) {
 var logResponse = function (message) {
   process.stdout.write('[proxy-response] ' + message + '\n');
 };
+
+/**
+ * Init a loop to handle saved responses.
+ * A response is inserted in DB if:
+ *  - marked as 'end'(ed)
+ *  - if the body has been (json) parsed
+ */
+setInterval(function () {
+  _.forEach(responsesToHandle, function (data, uuid) {
+    // wait the response to be finished
+    if (!data.end) {
+      return true;
+    }
+
+    // check body
+    if (data.body) {
+      try {
+        data.body = JSON.parse(data.body);
+      }
+      catch (err) {
+        data.body = undefined;
+      }
+    }
+
+    // if body, create or update the response
+    if (data.body) {
+      db.model('Record').find({uuid: uuid}, function (err, responses) {
+        var response = _.first(responses);
+
+        if (!response) {
+          db.model('Record').create([data], function (err) {
+            err && logError('An error has occurred ' + err);
+          });
+        } else {
+          // update properties
+          _.assign(response, data);
+
+          response.save(function (err) {
+            err && logError('An error has occurred. ' + err);
+          });
+        }
+      });
+    } else {
+      // if invalid body, delete it
+      delete responsesToHandle[uuid];
+    }
+  });
+}, 2000);
 
 /**
  * Start the proxy.
@@ -56,14 +106,6 @@ var startProxy = function (target) {
 
   server.listen(target.port);
 
-  // To modify the proxy connection before data is sent, you can listen
-  // for the 'proxyReq' event. When the event is fired, you will receive
-  // the following arguments:
-  // (http.ClientRequest proxyReq, http.IncomingMessage req,
-  //  http.ServerResponse res, Object options). This mechanism is useful when
-  // you need to modify the proxy request before the proxy connection
-  // is made to the target.
-  //
   proxy.on('proxyReq', function handleProxyRequest(proxyReq, req, res) {
     // hack the host in the header to be able to proxy a different host
     var parsedTarget = url.parse(target.url);
@@ -95,11 +137,8 @@ var startProxy = function (target) {
           targetId: targetId
         };
 
-        db.model('Record').create([data], function (err) {
-          if (err) {
-            logError('An error has occurred ' + err);
-          }
-        });
+        // save data in order to handle them in the loop
+        responsesToHandle[uuid] = data;
       });
     }
   });
@@ -118,25 +157,17 @@ var startProxy = function (target) {
     res.on('end', function () {
       var res_ = this.req.res,
           uuid = this.req._headers['x-mockify-rowuuid'],
-          megaBuffer = Buffer.concat(buffers);
+          megaBuffer = Buffer.concat(buffers),
+          response = responsesToHandle[uuid];
 
-      db.model('Record').find({uuid: uuid}, function (err, responses) {
-        var response = _.first(responses);
-
-        // if response found, update headers and body
-        if (response) {
-          response.resHeaders = res_.headers;
-          response.status = res_.statusCode;
-          response.body = megaBuffer.toString('utf8');
-
-          // be sure to have a complete response before saving it
-          if (response.resHeaders && response.status && response.body) {
-            response.save(function (err) {
-              err && logError('An error has occurred. ' + err);
-            });
-          }
-        }
-      });
+      if (response) {
+        // update the response data
+        _.assign(response, {
+          resHeaders: res_.headers,
+          status: res_.statusCode,
+          body: megaBuffer.toString('utf8')
+        });
+      }
     });
   });
 
@@ -148,20 +179,16 @@ var startProxy = function (target) {
       return;
     }
 
-    var uuid = proxyRes.req._headers['x-mockify-rowuuid'];
+    var uuid = proxyRes.req._headers['x-mockify-rowuuid'],
+        response = responsesToHandle[uuid];
 
-    db.model('Record').find({uuid: uuid}, function (err, responses) {
-      var response = _.first(responses);
-
-      // if response found, update status code
-      if (response) {
-        response.status = proxyRes.statusCode;
-      }
-
-      response.save(function (err) {
-        err && logError('An error has occurred. ' + err);
+    if (response) {
+      // update the response data
+      _.assign(response, {
+        status: proxyRes.statusCode,
+        end: 1
       });
-    });
+    }
 
     var message = [
       proxyRes.statusCode,
