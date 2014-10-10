@@ -4,9 +4,40 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Overwrite bootstrap theme */
+ /* Overwrite bootstrap theme */
+
+.nav, .pagination, .carousel, .panel-title, .cursor, a { cursor: pointer; }
+
 .navbar-default .navbar-brand {
   color: white;
+}
+
+.label {
+  font-size: 90%;
+
+  &.label-status {
+    color: black;
+
+    a {
+      color: black !important;
+    }
+
+    &.label-200, &.label-201, &.label-202, &.label-203, &.label-204 {
+      background-color: #20FF58;
+    }
+
+    &.label-300, &.label-301, &.label-302, &.label-303, &.label-304 {
+      background-color: #ffb03d;
+    }
+
+    &.label-400, &.label-401, &.label-402, &.label-403, &.label-404 {
+      background-color: #ffb03d;
+    }
+
+    &.label-500, &.label-501, &.label-502, &.label-503, &.label-504 {
+      background-color: red;
+    }
+  }
 }
 
 /* Titles */
@@ -39,9 +70,7 @@ input[type=text] {
   position: relative;
   z-index: 1;
 
-  /**
-   * Include the remove icon in the input text
-   */
+  // Include the remove icon in the input text
   ~ .glyphicon-remove {
     position: absolute;
     z-index: 10;
@@ -53,10 +82,6 @@ input[type=text] {
 .btn:focus, .btn:active:focus, .btn.active:focus {
   outline: none !important;
 }
-
-/* For Bootstrap */
-
-.nav, .pagination, .carousel, .panel-title, .cursor, a { cursor: pointer; }
 
 /* Classes */
 
