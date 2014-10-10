@@ -5,6 +5,7 @@
       <th width="20%">URL</th>
       <th width="20%">Method</th>
       <th>Body</th>
+      <th>Target</th>
       <th class="icon"></th>
       <th class="icon"><span class="glyphicon glyphicon-refresh" ng-click="listRecords()"></span></th>
     </tr>
@@ -12,7 +13,7 @@
 
   <tbody>
     <tr ng-show="!records.length">
-      <td colspan="6">No record yet.</td>
+      <td colspan="7">No record yet.</td>
     </tr>
 
     <tr ng-repeat="record in records track by $index">
@@ -52,6 +53,10 @@
       <td ng-if="!record.details">{{record._url}}</td>
       <td ng-if="!record.details">{{record._method}}</td>
       <td ng-if="!record.details">{{record.body() | characters:80 :true}}</td>
+
+      <td ng-if="!record.details">
+        <span class="label label-primary">{{record._targetId}}</span>
+      </td>
 
       <td ng-if="!record.details">
         <span
