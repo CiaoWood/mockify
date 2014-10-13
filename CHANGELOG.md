@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## Head
+
+Webapp:
+- Display responses of child processes
+- List/edit/delete/add records
+- Improve UI
+
+DB:
+- Rename the table 'response' to 'records'
+
+Bin:
+- Records only queries if the body is valid
+- Improve performances by handling valid queries in a dedicated loop instead of create/update/delete during the query processing
+
 ## 0.2.2
 
 - The configuration is read from ~/.mockifyrc
