@@ -17,7 +17,7 @@
     "angular-bootstrap": "~0.11.0",
     "angular-bootstrap-toggle-switch": "~0.5.1",
     "angular-perfect-scrollbar": "",
-    "angular-truncate": ""
+    "angular-truncate": "*"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.19"
