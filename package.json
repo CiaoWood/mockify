@@ -55,7 +55,7 @@
     "gulp-util": "^2.2.20",
     "gulp-watch": "~0.6.4",
     "gulp-expect-file": "0.0.7",
-    "gulp-jscs": "^1.1.2",
+    "gulp-jscs": "~1.1.2",
     "gulp-freeze": "0.0.1",
     "gulp-ng-annotate": "^0.3.3",
     "jshint-stylish": "^0.2.0",
