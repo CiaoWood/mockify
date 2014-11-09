@@ -37,8 +37,8 @@
    */
   .controller('LeftPanelCtrl', ['$scope', '$state',
     function ($scope, $state) {
-      if ($scope.logs === undefined) {
-        $scope.logs = [];
+      if ($scope.responses === undefined) {
+        $scope.responses = [];
       }
 
       // init the search value
@@ -56,20 +56,68 @@
   .controller('ResponsesCtrl', [
     '$scope', 'webSocketService', 'proxyResponseFactory', 'mockResponseFactory',
     function ($scope, webSocket, ProxyResponse, MockResponse) {
-      _.forEach(['proxy', 'mock'], function (eventSource) {
-        webSocket.on(eventSource + 'Response', function (logData) {
-          var log = logData;
+      /**
+       * Insert the details of a record in the list of records.
+       * @param  {Response} response    the clicked response
+       * @param  {Number} index         position to insert the details
+       */
+      $scope.toggleResponseDetails = function (response, index) {
+        console.log(response, index);
 
-          if (logData.source === 'proxy') {
-            log = new ProxyResponse(logData.message);
+        // record.opened = !record.opened;
+
+        // // save the index in the result
+        // record.index = index;
+
+        // if (record.opened) {
+        //   // clone and flag the new record to display a verbose row
+        //   var clonedRecord = _.cloneDeep(record);
+        //   var jsonValues =
+        //     ['_body', '_reqHeaders', '_resHeaders', '_parameters'];
+
+        //   delete clonedRecord.opened;
+        //   delete clonedRecord.index;
+
+        //   clonedRecord.details = {
+        //     // keys: _.keys(_.publicProperties(clonedRecord)),
+        //     keys: _.keys(clonedRecord),
+        //     values: _.map(_.values(clonedRecord), function (value) {
+        //       var ret = value;
+        //       if (_.isObject(value)) {
+        //         ret = JSON.stringify(value, null, 2);
+        //       }
+        //       return ret;
+        //     }),
+        //     jsonValues: _.map(_.keys(clonedRecord), function (k) {
+        //       return _.contains(jsonValues, k);
+        //     })
+        //   };
+
+        //   // insert the details
+        //   $scope.records.splice(record.index + 1, 0, clonedRecord);
+        // } else {
+        //   // remove the details
+        //   $scope.records.splice(record.index + 1, 1);
+        // }
+      };
+
+      /**
+       * Listen websockets events and update responses on change.
+       */
+      _.forEach(['proxy', 'mock'], function (eventSource) {
+        webSocket.on(eventSource + 'Response', function (resData) {
+          var response = resData;
+
+          if (resData.source === 'proxy') {
+            response = new ProxyResponse(resData.message);
           }
 
-          if (logData.source === 'mock') {
-            log = new MockResponse(logData.message);
+          if (resData.source === 'mock') {
+            response = new MockResponse(resData.message);
           }
 
           $scope.$apply(function () {
-            $scope.logs.push(log);
+            $scope.responses.push(response);
           });
         });
       });
