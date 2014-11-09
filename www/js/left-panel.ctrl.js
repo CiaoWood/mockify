@@ -35,10 +35,18 @@
   /**
    * Handle the left panel.
    */
-  .controller('LeftPanelCtrl', ['$scope', '$state',
-    function ($scope, $state) {
+  .controller('LeftPanelCtrl', [
+    '$scope',
+    '$state',
+    'localStorageService',
+
+    function (
+      $scope,
+      $state,
+      localStorageService
+    ) {
       if ($scope.responses === undefined) {
-        $scope.responses = [];
+        $scope.responses = localStorageService.get('responses');
       }
 
       // init the search value
@@ -54,8 +62,19 @@
    * Handle responses from child processes.
    */
   .controller('ResponsesCtrl', [
-    '$scope', 'webSocketService', 'proxyResponseFactory', 'mockResponseFactory',
-    function ($scope, webSocket, ProxyResponse, MockResponse) {
+    '$scope',
+    'webSocketService',
+    'proxyResponseFactory',
+    'mockResponseFactory',
+    'localStorageService',
+
+    function (
+      $scope,
+      webSocket,
+      ProxyResponse,
+      MockResponse,
+      localStorageService
+    ) {
       /**
        * Insert the details of a record in the list of records.
        * @param  {Response} response    the clicked response
@@ -118,6 +137,11 @@
 
           $scope.$apply(function () {
             $scope.responses.push(response);
+
+            // save last X responses in localStorageService
+            var index = _.max([0, $scope.responses.length - 10]);
+            localStorageService.save('responses',
+              $scope.responses.slice(index));
           });
         });
       });
