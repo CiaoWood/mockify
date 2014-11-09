@@ -25,8 +25,8 @@
     ) {
 
       var initDefaultUrl = function () {
-        $scope.targetsStored = localStorage.get('targets', 10);
-        return localStorage.last('targets') ||
+        $scope.targetsStored = localStorage.get('urls', 10);
+        return localStorage.last('urls') ||
           'http://jsonplaceholder.typicode.com';
       };
 
