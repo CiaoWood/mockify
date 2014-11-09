@@ -13,7 +13,7 @@
     '$scope',
     '$interval',
     'webSocketService',
-    'localStorageFactory',
+    'localStorageService',
     'targetFactory',
 
     function (
