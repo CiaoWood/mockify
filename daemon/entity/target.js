@@ -4,8 +4,6 @@ module.exports = (function () {
   var _             = require('../lib/helper')._;
 
   var Target = function (properties) {
-    // var self = this;
-
     this._id =
     this._port =
     this._url =
