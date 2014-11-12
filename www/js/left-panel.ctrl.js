@@ -75,6 +75,8 @@
       MockResponse,
       localStorageService
     ) {
+      var LOCAL_STORAGE_KEY = 'responses';
+
       /**
        * Insert the details of a record in the list of records.
        * @param  {Response} response    the clicked response
@@ -121,6 +123,14 @@
       };
 
       /**
+       * Clean history saved in local storage.
+       */
+      $scope.clearHistory = function () {
+        localStorageService.delete(LOCAL_STORAGE_KEY);
+        $scope.responses.length = 0;
+      };
+
+      /**
        * Listen websockets events and update responses on change.
        */
       _.forEach(['proxy', 'mock'], function (eventSource) {
@@ -140,7 +150,7 @@
 
             // save last X responses in localStorageService
             var index = _.max([0, $scope.responses.length - 10]);
-            localStorageService.save('responses',
+            localStorageService.save(LOCAL_STORAGE_KEY,
               $scope.responses.slice(index));
           });
         });
