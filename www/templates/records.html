@@ -18,40 +18,17 @@
 
     <tr ng-repeat="record in records track by $index">
       <td ng-if="record.details" colspan="7">
-        <perfect-scrollbar class="scroller" suppress-scroll-x="true" wheel-propagation="true" wheel-speed="5">
-          <form class="form-horizontal" role="form">
-            <div class="form-group">
-              <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-success" ng-click="validRecordEdition(record, $index)">OK</button>
-              </div>
-            </div>
-
-            <div class="form-group" ng-repeat="key in record.details.keys">
-              <label class="col-sm-2 control-label">{{key}}</label>
-              <div class="col-sm-9">
-                <input ng-if="!record.details.jsonValues[$index]"
-                  ng-model="record.details.values[$index]"
-                  type="text"
-                  class="form-control" />
-
-                <textarea ng-if="record.details.jsonValues[$index]" ng-model="record.details.values[$index]"></textarea>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-success" ng-click="validRecordEdition(record, $index)">OK</button>
-              </div>
-            </div>
-          </form>
-        </perfect-scrollbar>
+        <div class="record-edition" ui-view="recordEdition"></div>
       </td>
 
       <td ng-if="!record.details">
         <span class="label label-status label-{{record._status}}">{{record._status}}</span>
       </td>
+
       <td ng-if="!record.details">{{record._url}}</td>
+
       <td ng-if="!record.details">{{record._method}}</td>
+
       <td ng-if="!record.details">{{record.body() | characters:80 :true}}</td>
 
       <td ng-if="!record.details">

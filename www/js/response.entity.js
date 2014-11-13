@@ -52,6 +52,7 @@
         this._method    = parts[1];
         this._host      = parts[2];
         this._url       = parts[3];
+        this._recordId  = parseInt(parts[4].trim());
       }
     };
 

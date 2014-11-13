@@ -33,7 +33,12 @@
       </td>
 
       <td>
-        <span class="glyphicon glyphicon-chevron-right" title="Show details" ng-click="toggleResponseDetails(response, $index)"></span>
+        <span
+          ng-if="response._source === 'mock'"
+          class="glyphicon glyphicon-chevron-right"
+          title="Show details"
+          ng-click="openRecordEdition(response._recordId)">
+        </span>
       </td>
     </tr>
 

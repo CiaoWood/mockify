@@ -7,7 +7,7 @@
   /**
    * Return an object ready to be instanciated to describe a Target entity.
    */
-  .factory('recordFactory', [function () {
+  .factory('recordFactory', [function recordFactory() {
     var Record = function (properties) {
       _.privateMerge(this, properties);
     };
