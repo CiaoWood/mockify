@@ -166,7 +166,9 @@
                 record = _($scope.records).where({_id: id}).first(),
                 index = _.findIndex($scope.records, {_id: id});
 
-            $scope.toggleRecordDetails(record, index);
+            if (record && index) {
+              $scope.toggleRecordDetails(record, index);
+            }
           }
         });
       };

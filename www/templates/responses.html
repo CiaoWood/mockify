@@ -34,7 +34,7 @@
 
       <td>
         <span
-          ng-if="response._source === 'mock'"
+          ng-if="response._source === 'mock' && response._recordId"
           class="glyphicon glyphicon-chevron-right"
           title="Show details"
           ng-click="openRecordEdition(response._recordId)">
