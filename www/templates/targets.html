@@ -48,9 +48,9 @@
 
       <td>
         <span
-          ng-class="{'on': target._recording && target._enabled, 'disabled': !target._enabled}"
+          ng-class="{'on': target._recording && target._enabled, 'disabled': !target._enabled || target._mocking}"
           class="glyphicon glyphicon-record"
-          ng-click="target._enabled && toggleRecordTarget(target)"></span>
+          ng-click="target._enabled && target._proxying && toggleRecordTarget(target)"></span>
       </td>
 
       <td class="switch">
