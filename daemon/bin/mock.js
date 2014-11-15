@@ -60,9 +60,12 @@ var runApp = function (target, db) {
 
             res.setHeader('X-mockify-rowuuid', record.uuid);
 
-            res
-              .status(record.status || 500)
-              .send(record.body || 'empty body');
+            // delay the result according to the record delay attribute
+            setTimeout(function () {
+              res
+                .status(record.status || 500)
+                .send(record.body || 'empty body');
+            }, record.delay);
 
             var message = [
               record.status,

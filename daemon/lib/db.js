@@ -19,7 +19,7 @@ module.exports = function () {
       schemas   = [
         'CREATE  TABLE "main"."record"' +
         ' ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-        // index on uuid to improve speed
+        // index on uuid to improve search
         ' "uuid" VARCHAR UNIQUE NOT NULL,' +
         ' "dateCreated" DATETIME NOT NULL DEFAULT CURRENT_DATE,' +
         // can be null because it will be updated when receiving the response
@@ -33,6 +33,8 @@ module.exports = function () {
         // can be null because it will be updated when receiving the response
         ' "body" TEXT,' +
         ' "comment" TEXT,' +
+        // optional delay in ms
+        ' "delay" INTEGER NOT NULL DEFAULT 0,' +
         ' "targetId" INTEGER,' +
         // replace if the query is the same than a previous one
         ' UNIQUE (status, url, method, parameters) ON CONFLICT REPLACE)',
