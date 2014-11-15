@@ -7,7 +7,7 @@
   /**
    * Return objects to description a proxy response.
    */
-  .factory('proxyResponseFactory', [function () {
+  .factory('proxyResponseFactory', [function proxyResponseFactory() {
     var ProxyResponse = function (properties) {
       this._source = 'proxy';
       this._status =
@@ -35,7 +35,7 @@
   /**
    * Return objects to description a proxy response.
    */
-  .factory('mockResponseFactory', [function () {
+  .factory('mockResponseFactory', [function mockResponseFactory() {
     var MockResponse = function (properties) {
       this._source = 'mock';
       this._status =
