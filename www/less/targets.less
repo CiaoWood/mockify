@@ -3,16 +3,30 @@ table.targets {
     padding: 6px !important;
   }
 
-  tr.fields {
-    input {
-      &[ng-model="port"] {
-        width: 80px;
-      }
-      &[ng-model="url"] {
-        width: 280px;
+  tr {
+    &.fields {
+      input {
+        &[ng-model="port"] {
+          width: 80px;
+        }
+        &[ng-model="url"] {
+          width: 280px;
+        }
+
+        display: inline !important;
       }
 
-      display: inline !important;
+      td { 
+        position: relative;
+
+        span.remove-entry {
+          position: absolute;
+          top: 14px;
+          left: 353px;
+          color: silver;
+          width: 15px;
+        }
+      }
     }
   }
 

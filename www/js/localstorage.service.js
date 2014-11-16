@@ -67,6 +67,17 @@
       this.delete = function (key) {
         delete lS[key];
       };
+
+      /**
+       * Delete a item from a list of values for a specified key.
+       */
+      this.deleteValue = function (key, valueToDelete) {
+        var values = this.get(key);
+
+        if (_.isArray(values)) {
+          this.save(key, _.pull(values, valueToDelete));
+        }
+      };
     }
   ]);
 })();

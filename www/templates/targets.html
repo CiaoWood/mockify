@@ -89,6 +89,10 @@
         <input type="text" class="form-control" placeholder="{{defaultValues.port}}" ng-model="port" />
         <input type="text" class="form-control" placeholder="{{defaultValues.url}}" ng-model="url"
           typeahead="target_ for target_ in targetsStored | filter:$viewValue | limitTo:8" />
+        <span class="glyphicon glyphicon-remove remove-entry"
+          ng-show="url"
+          ng-click="removeEntry()">
+        </span>
         <span class="pull-right">
           <button type="button" class="btn btn-success" ng-click="addAndStartTarget(port, url); showTargetFields = false">OK</button>
           <button type="button" class="btn btn-default" ng-click="showTargetFields = false">Cancel</button>

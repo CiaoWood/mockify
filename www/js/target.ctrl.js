@@ -98,6 +98,17 @@
       };
 
       /**
+       * Remove an entry of the list of suggestions.
+       */
+      $scope.removeEntry = function () {
+        if ($scope.url) {
+          localStorage.deleteValue('urls', $scope.url);
+          $scope.url = null;
+          $scope.targetsStored = localStorage.get('urls', 10);
+        }
+      };
+
+      /**
        * Websockets events
        */
 
