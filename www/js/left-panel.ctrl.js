@@ -283,7 +283,7 @@
           // we want to collapse the previous record
           index--;
 
-          // make an object with keys ad values from fields
+          // make an object with keys and values from fields
           var properties = _.reduce(clonedRecord.details,
             function (result, field) {
               result[field.key] = field.value;
