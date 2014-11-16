@@ -166,7 +166,7 @@
                 record = _($scope.records).where({_id: id}).first(),
                 index = _.findIndex($scope.records, {_id: id});
 
-            if (record && index) {
+            if (angular.isDefined(record) && angular.isDefined(index)) {
               $scope.toggleRecordDetails(record, index);
             }
           }
