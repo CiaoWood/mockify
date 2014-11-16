@@ -184,6 +184,11 @@
         webSocket.emit('listRecords');
       };
 
+      var JSON_VALUES =
+            ['_body', '_reqHeaders', '_resHeaders', '_parameters'];
+      var HIDDEN_KEYS = ['_id', '_uuid', '_targetId', 'opened', 'index'];
+      var READONLY_KEYS = ['_dateCreated'];
+
       /**
        * Insert the details of a record in the list of records.
        * @param  {Record} record    the clicked record
@@ -198,26 +203,29 @@
         if (record.opened) {
           // clone and flag the new record to display a verbose row
           var clonedRecord = _.cloneDeep(record);
-          var jsonValues =
-            ['_body', '_reqHeaders', '_resHeaders', '_parameters'];
 
-          delete clonedRecord.opened;
-          delete clonedRecord.index;
+          var keys = _.without.apply(this,
+            [].concat([_.keys(clonedRecord)], HIDDEN_KEYS));
 
-          clonedRecord.details = {
-            // keys: _.keys(_.publicProperties(clonedRecord)),
-            keys: _.keys(clonedRecord),
-            values: _.map(_.values(clonedRecord), function (value) {
-              var ret = value;
-              if (_.isObject(value)) {
-                ret = JSON.stringify(value, null, 2);
-              }
-              return ret;
-            }),
-            jsonValues: _.map(_.keys(clonedRecord), function (k) {
-              return _.contains(jsonValues, k);
-            })
-          };
+          var fields = [];
+          _.forEach(keys, function (key) {
+            var field = {
+              key: key,
+              value: (function (value) {
+                var ret = value;
+                if (_.isObject(value)) {
+                  ret = JSON.stringify(value, null, 2);
+                }
+                return ret;
+              })(clonedRecord[key]),
+              isJson: _.contains(JSON_VALUES, key),
+              isReadOnly: _.contains(READONLY_KEYS, key)
+            };
+
+            fields.push(field);
+          });
+
+          clonedRecord.details = fields;
 
           // insert the details
           $scope.records.splice(record.index + 1, 0, clonedRecord);
@@ -256,16 +264,16 @@
       $scope.validRecordEdition = function (clonedRecord, index) {
         var error = false;
 
-        // convert JSON to object
-        _.map(clonedRecord.details.keys, function (key, i) {
-          if (clonedRecord.details.jsonValues[i]) {
+        // check JSON structures
+        _.forEach(clonedRecord.details, function (field) {
+          if (field.isJson) {
             try {
-              JSON.parse(clonedRecord.details.values[i]);
+              JSON.parse(field.value);
             }
             catch (err) {
               error = true;
               $scope.alertError(
-                'The value of the ' + key +
+                'The value of the ' + field.key +
                 ' property in not a valid JSON structure.');
             }
           }
@@ -275,10 +283,16 @@
           // we want to collapse the previous record
           index--;
 
-          var properties = {};
-          _.map(clonedRecord.details.keys, function (keys, i) {
-            properties[keys] = clonedRecord.details.values[i];
-          });
+          // make an object with keys ad values from fields
+          var properties = _.reduce(clonedRecord.details,
+            function (result, field) {
+              result[field.key] = field.value;
+              return result;
+            }, {});
+
+          // do not forget to add the id of the record which is hidden in the
+          // form
+          properties.id = clonedRecord._id;
 
           webSocket.emit('updateRecord', _.publicProperties(properties));
           webSocket.on('updateRecord', function (msgLog) {
@@ -308,6 +322,22 @@
       link: function (scope, element) {
         element.on('click', function () {
           scope.click(angular.element(this).html());
+        });
+      }
+    };
+  }])
+
+  /**
+   * Submit the form with ctrl enter.
+   */
+  .directive('submitOnCtrlEnter', [function () {
+    return {
+      restrict: 'A',
+      link: function (scope, element) {
+        element.on('keydown', function (e) {
+          if (e.keyCode === 13 && e.ctrlKey) {
+            element.find('[type=submit]').eq(0).click();
+          }
         });
       }
     };
