@@ -2,33 +2,67 @@
   <thead>
     <th class="icon">Who</th>
     <th>Target response</th>
-    <th class="icon"><span class="glyphicon glyphicon-ban-circle" title="Clear history" ng-click="clearHistory()"></span></th>
+    <th class="icon">
+      <span class="glyphicon glyphicon-ban-circle" title="Clear history" ng-click="clearHistory()"></span>
+    </th>
   </thead>
 
   <tbody>
     <tr ng-repeat="response in responses track by $index">
       <td>
-        <span class="glyphicon glyphicon-th-list" ng-class="'log-' + response._source" title="{{response._source}}"></span>
+        <span
+          class="glyphicon glyphicon-th-list"
+          ng-class="'log-' + response._source"
+          set-to-search-box="type"
+          title="{{response._source}}">
+        </span>
       </td>
 
       <td>
         <span ng-if="response._source === 'proxy'">
-          <span class="label label-status label-{{response._status}}"><a href="" set-to-search-box>{{response._status}}</a></span>
-          <span class="label label-primary"><a href="" set-to-search-box>{{response._method}}</a></span>
-          <span class="label label-primary"><a href="" set-to-search-box>{{response._host}}</a></span>
-          <span class="label label-primary"><a href="" set-to-search-box>{{response._url}}</a></span>
+          <span class="label label-status label-{{response._status}}">
+            <a href="" set-to-search-box="status">{{response._status}}</a>
+          </span>
+
+          <span class="label label-primary">
+            <a href="" set-to-search-box="method">{{response._method}}</a>
+          </span>
+
+          <span class="label label-primary">
+            <a href="" set-to-search-box="host">{{response._host}}</a>
+          </span>
+
+          <span class="label label-primary">
+            <a href="" set-to-search-box="url">{{response._url}}</a>
+          </span>
 
           <span class="glyphicon glyphicon-arrow-right"></span>
 
-          <span class="label label-primary"><a href="" set-to-search-box>{{response._targetHost}}</a></span>
-          <span class="label label-primary"><a href="" set-to-search-box>{{response._url}}</a></span>
+          <span class="label label-primary">
+            <a href="" set-to-search-box>{{response._targetHost}}</a>
+          </span>
+
+          <span class="label label-primary">
+            <a href="" set-to-search-box>{{response._url}}</a>
+          </span>
         </span>
 
         <span ng-if="response._source === 'mock'">
-          <span class="label label-status label-{{response._status}}"><a href="" set-to-search-box>{{response._status}}</a></span>
-          <span class="label label-primary"><a href="" set-to-search-box>{{response._method}}</a></span>
-          <span class="label label-primary"><a href="" set-to-search-box>{{response._host}}</a></span>
-          <span class="label label-primary"><a href="" set-to-search-box>{{response._url}}</a></span>
+          <span class="label label-status label-{{response._status}}">
+            <a href="" set-to-search-box="status">{{response._status}}</a>
+          </span>
+
+          <span class="label label-primary">
+            <a href="" set-to-search-box="method">{{response._method}}</a>
+          </span>
+
+          <span class="label label-primary">
+            <a href="" set-to-search-box="host">{{response._host}}</a>
+          </span>
+
+          <span class="label label-primary">
+            <a href="" set-to-search-box="url">{{response._url}}</a>
+          </span>
         </span>
       </td>
 

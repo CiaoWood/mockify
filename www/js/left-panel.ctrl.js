@@ -319,9 +319,11 @@
           });
         };
       }],
-      link: function (scope, element) {
+      link: function (scope, element, attrs) {
         element.on('click', function () {
-          scope.click(angular.element(this).html());
+          var prefix = attrs.setToSearchBox,
+              value = (element.html().trim() || element.attr('title').trim());
+          scope.click(prefix + ':' + value);
         });
       }
     };
