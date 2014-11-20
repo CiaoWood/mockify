@@ -134,7 +134,8 @@ var startProxy = function (target) {
           method: req.method,
           parameters: (_.isObject(json) && json) || {},
           reqHeaders: req.headers,
-          targetId: targetId
+          targetId: targetId,
+          delay: 0
         };
 
         // save data in order to handle them in the loop
