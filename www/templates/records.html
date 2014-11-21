@@ -18,7 +18,7 @@
       <td colspan="7">No record yet.</td>
     </tr>
 
-    <tr ng-repeat="record in records track by $index">
+    <tr ng-repeat="record in records | filter:filterObjects track by $index">
       <td ng-if="record.details" colspan="7">
         <div class="record-edition" ui-view="recordEdition"></div>
       </td>

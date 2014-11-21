@@ -5,6 +5,7 @@
     'mockify.service.webSocket',
     'mockify.entity.response',
     'mockify.entity.record',
+    'mockify.service.searchHistory',
     'truncate'
   ])
 
@@ -49,21 +50,71 @@
     '$scope',
     '$state',
     'localStorageService',
+    'searchHistoryFactory',
 
     function LeftPanelCtrl(
       $scope,
       $state,
-      localStorageService
+      localStorageService,
+      searchHistoryFactory
     ) {
       if ($scope.responses === undefined) {
         $scope.responses = localStorageService.get('responses');
       }
 
-      // init the search value
-      $scope.search = { value: undefined };
+      // init search box
+      $scope.search = {value: ''};
+      $scope.searchObjects = {};
 
+      $scope.getSearchObject = function (stateName_) {
+        var stateName = stateName_ || $scope.$state.$current.name,
+            // records or responses
+            searchIndex = stateName.split(/\./).slice(0, 3).pop();
+
+        if (!$scope.searchObjects[searchIndex]) {
+          $scope.searchObjects[searchIndex] = searchHistoryFactory.new();
+        }
+
+        return $scope.searchObjects[searchIndex];
+      };
+
+      /**
+       * When selecting a tab, update the state and refresh the search box.
+       */
       $scope.selectTab = function (stateName) {
         $state.go(stateName);
+        $scope.search.value = $scope.getSearchObject(stateName).value();
+      };
+
+      /**
+       * Update the value of the search in the service.
+       */
+      $scope.updateSearchValue = function () {
+        $scope.getSearchObject().value($scope.search.value);
+      };
+
+      /**
+       * Clear the search and update the value in the service.
+       */
+      $scope.clearSearch = function () {
+        $scope.search.value = '';
+        $scope.updateSearchValue();
+      };
+
+      /**
+       * Filter records or responses according to the search value.
+       */
+      $scope.filterObjects = function (objects) {
+        // return the evaluation and if true, keep the record
+        try {
+          var bool = $scope.getSearchObject()
+            .eval_(_.publicProperties(objects));
+          $scope.search.error = false;
+          return bool;
+        } catch (err) {
+          $scope.search.error = true;
+          return false;
+        }
       };
     }
   ])
@@ -316,6 +367,7 @@
         $scope.click = function (value) {
           $scope.$apply(function () {
             $scope.search.value = value;
+            $scope.updateSearchValue();
           });
         };
       }],
@@ -323,7 +375,12 @@
         element.on('click', function () {
           var prefix = attrs.setToSearchBox,
               value = (element.html().trim() || element.attr('title').trim());
-          scope.click(prefix + ':' + value);
+
+          if (_.isString(value)) {
+            value = '\'' + value + '\'';
+          }
+
+          scope.click(prefix + '==' + value);
         });
       }
     };
