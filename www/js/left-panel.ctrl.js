@@ -31,16 +31,26 @@
           }
         }
       })
-      .state('app.dashboard.records.edit', {
-        url: '/:id/edit',
-        views: {
-          // ui-view="recordEdition" of records.html
-          'recordEdition@app.dashboard.records': {
-            templateUrl: 'record-edition.html',
-            controller: 'RecordEditionCtrl'
+        .state('app.dashboard.records.edit', {
+          url: '/:id/edit',
+          views: {
+            // ui-view="recordEdition" of records.html
+            'recordEdition@app.dashboard.records': {
+              templateUrl: 'record-edition.html',
+              controller: 'RecordEditionCtrl'
+            }
           }
-        }
-      });
+        })
+        .state('app.dashboard.records.add', {
+          url: '/add',
+          views: {
+            // ui-view="tabContent" of left-panel.html
+            'tabContent@app.dashboard': {
+              templateUrl: 'record-addition.html',
+              controller: 'RecordAdditionCtrl'
+            }
+          }
+        });
   })
 
   /**
@@ -76,6 +86,13 @@
         }
 
         return $scope.searchObjects[searchIndex];
+      };
+
+      /**
+       * Go to the add record form.
+       */
+      $scope.addRecord = function () {
+        $state.go('app.dashboard.records.add');
       };
 
       /**
@@ -356,6 +373,10 @@
       };
     }
   ])
+
+  .controller('RecordAdditionCtrl', ['$scope', function ($scope) {
+    console.log('add', $scope);
+  }])
 
   /**
    * When clicking on a tag, save its value in the search box.
