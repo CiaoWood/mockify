@@ -76,6 +76,11 @@
       $scope.search = {value: ''};
       $scope.searchObjects = {};
 
+      /**
+       * Return the Search instance from the searchHistoryFactory service
+       * in charge to eval the search value in order to filter responses or
+       * records.
+       */
       $scope.getSearchObject = function (stateName_) {
         var stateName = stateName_ || $scope.$state.$current.name,
             // records or responses
