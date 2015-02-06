@@ -1,8 +1,8 @@
 (function () {
   'use strict';
 
-  angular.module('mockify.entity.target', [
-    'mockify.service.webSocket'
+  angular.module('mockify.target.entity.target', [
+    'mockify.common.service.webSocket'
   ])
 
   /**

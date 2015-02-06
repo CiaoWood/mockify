@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module('mockify.logs.directives', [
+  angular.module('mockify.log.directive.updateScroll', [
   ])
 
   /**

@@ -1,13 +1,13 @@
 (function () {
   'use strict';
 
-  angular.module('mockify.entity.record', [
+  angular.module('mockify.record.entity.record', [
   ])
 
   /**
    * Return an object ready to be instanciated to describe a Target entity.
    */
-  .factory('recordFactory', [function () {
+  .factory('recordFactory', [function recordFactory() {
     var Record = function (properties) {
       _.privateMerge(this, properties);
     };

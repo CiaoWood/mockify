@@ -142,11 +142,8 @@ module.exports = (function () {
     // create the database if it not exists.
     db.create();
 
-    // start the http server
-    http.start().then(function (msgLog) {
-      // @FIXME
-      console.log(msgLog);
-    }, alert.error);
+    // start the http server and print stdout/stderr via console.log
+    http.start().progress(console.log);
 
     initIO(io, http, alert);
   });

@@ -1,9 +1,9 @@
 (function () {
   'use strict';
 
-  angular.module('mockify.logs', [
-    'mockify.service.webSocket',
-    'mockify.logs.directives',
+  angular.module('mockify.log.controller.log', [
+    'mockify.common.service.webSocket',
+    'mockify.log.directive.updateScroll',
 
     'perfect_scrollbar'
   ])

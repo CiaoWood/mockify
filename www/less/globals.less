@@ -1,12 +1,14 @@
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Cabin', sans-serif;
   font-weight: normal;
   -webkit-font-smoothing: antialiased;
 }
 
  /* Overwrite bootstrap theme */
 
-.nav, .pagination, .carousel, .panel-title, .cursor, a { cursor: pointer; }
+.nav, .pagination, .carousel, .panel-title, .cursor, a {
+  cursor: pointer;
+}
 
 .navbar-default .navbar-brand {
   color: white;
@@ -14,6 +16,7 @@ body {
 
 .label {
   font-size: 90%;
+  margin: 0 2px;
 
   &.label-status {
     color: black;
@@ -42,6 +45,10 @@ body {
 
 /* Titles */
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Cabin', sans-serif;
+}
+
 h1 {
   font-size: 1.6em;
   font-weight: bold;
@@ -65,6 +72,10 @@ span[ng-click] {
 }
 
 /* Forms */
+
+div.action-buttons {
+  margin: 0.5em 0 1.2em 0;
+}
 
 input[type=text] {
   position: relative;
@@ -96,9 +107,33 @@ input[type=text] {
 
 /* Icons */
 
-table {
-  .glyphicon {
-    top: 3px;
-    cursor: pointer;
+.glyphicon {
+  top: 3px;
+  cursor: pointer;
+}
+
+/* Mock / Proxy */
+
+.log-mock {
+  color: @mock-color;
+
+  a {
+    color: @mock-color;
+  }
+}
+
+.log-proxy {
+  color: @proxy-color;
+
+  a {
+    color: @proxy-color;
+  }
+}
+
+.log-error {
+  color: red !important;
+
+  a {
+    color: red;
   }
 }

@@ -16,7 +16,9 @@ var httpProxy   = require('http-proxy'),
     url         = require('url'),
     db          = require('../lib/db')(),
     targetId    = argv.targetId,
-    exit        = function () { process.exit(1); },
+    exit        = function () {
+      process.exit(1);
+    },
 
     responsesToHandle   = {};
 
@@ -134,7 +136,8 @@ var startProxy = function (target) {
           method: req.method,
           parameters: (_.isObject(json) && json) || {},
           reqHeaders: req.headers,
-          targetId: targetId
+          targetId: targetId,
+          delay: 0
         };
 
         // save data in order to handle them in the loop

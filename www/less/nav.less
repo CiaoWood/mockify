@@ -1,0 +1,48 @@
+@nav-width: 75px;
+@nav-background: #2f3742;
+@nav-background-hover: #ccc;
+@nav-color: #566272;
+@nav-color-hover: #333;
+
+nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: @nav-width;
+  background: @nav-background;
+  box-shadow: 2px 2px 3px 0px #222;
+
+  ul {
+    margin: 0;
+    padding: 0;
+
+    li {
+      background: @nav-background;
+      margin: 0;
+      padding: 0;
+      display: block;
+      list-style: none;
+      color: @nav-color;
+      text-align: center;
+
+      &:hover {
+        color: white;
+      }
+
+      &.active {
+        background: white;
+        color: @nav-color-hover;
+      }
+
+      span {
+        display: block;
+        width: @nav-width;
+        height: @nav-width;
+        font-size: 2.5em;
+        // overwrite 'glyphicon' from bootstrap
+        top: 0 !important;
+        line-height: @nav-width !important;
+      }
+    }
+  }
+}

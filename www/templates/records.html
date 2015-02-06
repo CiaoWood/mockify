@@ -1,4 +1,24 @@
-<table class="table table-striped data">
+<div class="action-buttons" ng-class="{'has-error': search.error}">
+  <div class="input-container">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Search"
+      ng-model="search.value"
+      ng-change="updateSearchValue()" />
+
+    <span
+      class="glyphicon glyphicon-remove icon-remove"
+      ng-click="clearSearch()">
+    </span>
+  </div>
+
+  <button type="button" class="btn btn-primary pull-right" ng-click="$state.go('app.dashboard.records.add')">
+    Add record
+  </button>
+</div>
+
+<table class="table table-striped records">
   <thead>
     <tr>
       <th width="50px">Status</th>
@@ -7,7 +27,9 @@
       <th>Body</th>
       <th>Target</th>
       <th class="icon"></th>
-      <th class="icon"><span class="glyphicon glyphicon-refresh" ng-click="listRecords()"></span></th>
+      <th class="icon">
+        <span class="glyphicon glyphicon-refresh" ng-click="listRecords()"></span>
+      </th>
     </tr>
   </thead>
 
@@ -16,46 +38,35 @@
       <td colspan="7">No record yet.</td>
     </tr>
 
-    <tr ng-repeat="record in records track by $index">
+    <tr ng-repeat="record in records | filter:filterObjects track by $index">
       <td ng-if="record.details" colspan="7">
-        <perfect-scrollbar class="scroller" suppress-scroll-x="true" wheel-propagation="true" wheel-speed="5">
-          <form class="form-horizontal" role="form">
-            <div class="form-group">
-              <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-success" ng-click="validRecordEdition(record, $index)">OK</button>
-              </div>
-            </div>
-
-            <div class="form-group" ng-repeat="key in record.details.keys">
-              <label class="col-sm-2 control-label">{{key}}</label>
-              <div class="col-sm-9">
-                <input ng-if="!record.details.jsonValues[$index]"
-                  ng-model="record.details.values[$index]"
-                  type="text"
-                  class="form-control" />
-
-                <textarea ng-if="record.details.jsonValues[$index]" ng-model="record.details.values[$index]"></textarea>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-success" ng-click="validRecordEdition(record, $index)">OK</button>
-              </div>
-            </div>
-          </form>
-        </perfect-scrollbar>
+        <div class="record-edition" ui-view="recordEdition"></div>
       </td>
 
       <td ng-if="!record.details">
-        <span class="label label-status label-{{record._status}}">{{record._status}}</span>
+        <span class="label label-status label-{{record._status}}">
+          <a href="" set-to-search-box="status">{{record._status}}</a>
+        </span>
       </td>
-      <td ng-if="!record.details">{{record._url}}</td>
-      <td ng-if="!record.details">{{record._method}}</td>
+
+      <td ng-if="!record.details">
+        <span class="label label-primary">
+          <a href="" set-to-search-box="url">{{record._url}}</a>
+        </span>
+      </td>
+
+      <td ng-if="!record.details">
+        <span class="label label-primary">
+          <a href="" set-to-search-box="method">{{record._method}}</a>
+        </span>
+      </td>
+
       <td ng-if="!record.details">{{record.body() | characters:80 :true}}</td>
 
       <td ng-if="!record.details">
-        <span class="label label-primary">{{record._targetId}}</span>
+        <span class="label label-primary">
+          <a href="" set-to-search-box="targetId">{{record._targetId}}</a>
+        </span>
       </td>
 
       <td ng-if="!record.details">

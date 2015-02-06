@@ -1,13 +1,13 @@
 (function () {
   'use strict';
 
-  angular.module('mockify.entity.response', [
+  angular.module('mockify.response.entity.response', [
   ])
 
   /**
    * Return objects to description a proxy response.
    */
-  .factory('proxyResponseFactory', [function () {
+  .factory('proxyResponseFactory', [function proxyResponseFactory() {
     var ProxyResponse = function (properties) {
       this._source = 'proxy';
       this._status =
@@ -35,7 +35,7 @@
   /**
    * Return objects to description a proxy response.
    */
-  .factory('mockResponseFactory', [function () {
+  .factory('mockResponseFactory', [function mockResponseFactory() {
     var MockResponse = function (properties) {
       this._source = 'mock';
       this._status =
@@ -52,6 +52,7 @@
         this._method    = parts[1];
         this._host      = parts[2];
         this._url       = parts[3];
+        this._recordId  = parseInt(parts[4].trim());
       }
     };
 

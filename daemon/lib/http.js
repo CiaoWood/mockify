@@ -27,12 +27,12 @@ module.exports = function (config) {
       ]);
 
       httpChild.stdout.on('data', function (data) {
-        deferred.resolve(data.toString('utf-8'));
+        deferred.notify(data.toString('utf-8'));
       });
 
       // log stderr
       httpChild.stderr.on('data', function (data) {
-        deferred.reject(data.toString('utf-8'));
+        deferred.notify(data.toString('utf-8'));
       });
     }
 

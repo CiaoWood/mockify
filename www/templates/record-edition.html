@@ -1,0 +1,29 @@
+<perfect-scrollbar class="scroller" suppress-scroll-x="true" wheel-propagation="true" wheel-speed="5">
+  <form class="form-horizontal" role="form" submit-on-ctrl-enter>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-success" ng-click="validRecordEdition(record, $index)" title="or Ctrl+Enter">OK</button>
+      </div>
+    </div>
+
+    <div class="form-group" ng-repeat="field in record.details">
+      <label class="col-sm-2 control-label">{{field.key}}</label>
+      <div class="col-sm-9">
+        <input
+          ng-if="!field.isJson"
+          ng-disabled="field.isReadOnly"
+          ng-model="field.value"
+          type="text"
+          class="form-control" />
+
+        <textarea ng-if="field.isJson" ng-model="field.value"></textarea>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-success" ng-click="validRecordEdition(record, $index)" title="or Ctrl+Enter">OK</button>
+      </div>
+    </div>
+  </form>
+</perfect-scrollbar>

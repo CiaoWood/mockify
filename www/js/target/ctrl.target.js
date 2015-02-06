@@ -1,19 +1,32 @@
 (function () {
   'use strict';
 
-  angular.module('mockify.process', [
-    'mockify.service.webSocket',
-    'mockify.service.localStorage',
-    'mockify.entity.target',
+  angular.module('mockify.target.controller.target', [
+    'mockify.common.service.webSocket',
+    'mockify.common.service.localStorage',
+    'mockify.target.entity.target',
 
     'toggle-switch'
   ])
+
+  .config(['$stateProvider', function ($stateProvider) {
+    $stateProvider
+      .state('app.dashboard.targets', {
+        url: '/targets',
+        views: {
+          'primaryContainer@app': {
+            templateUrl: 'targets.html',
+            controller: 'TargetCtrl'
+          }
+        }
+      });
+  }])
 
   .controller('TargetCtrl', [
     '$scope',
     '$interval',
     'webSocketService',
-    'localStorageFactory',
+    'localStorageService',
     'targetFactory',
 
     function (
@@ -23,10 +36,9 @@
       localStorage,
       Target
     ) {
-
       var initDefaultUrl = function () {
-        $scope.targetsStored = localStorage.get('targets', 10);
-        return localStorage.last('targets') ||
+        $scope.targetsStored = localStorage.get('urls', 10);
+        return localStorage.last('urls') ||
           'http://jsonplaceholder.typicode.com';
       };
 
@@ -95,6 +107,17 @@
        */
       $scope.toggleEnableTarget = function (target) {
         target.toggleEnable();
+      };
+
+      /**
+       * Remove an entry of the list of suggestions.
+       */
+      $scope.removeEntry = function () {
+        if ($scope.url) {
+          localStorage.deleteValue('urls', $scope.url);
+          $scope.url = null;
+          $scope.targetsStored = localStorage.get('urls', 10);
+        }
       };
 
       /**

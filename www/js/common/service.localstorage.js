@@ -1,17 +1,17 @@
 (function () {
   'use strict';
 
-  angular.module('mockify.service.localStorage', [
+  angular.module('mockify.common.service.localStorage', [
   ])
 
-  .factory('localStorageFactory', ['$window', function ($window) {
-    var lS = $window.localStorage;
+  .service('localStorageService', ['$window',
+    function localStorageService($window) {
+      var lS = $window.localStorage;
 
-    return {
       /**
        * Parse and return a value from the localStorage.
        */
-      get: function (key, limit) {
+      this.get = function (key, limit) {
         limit = limit || 10;
 
         var results = [];
@@ -27,23 +27,23 @@
         }
 
         return results;
-      },
+      };
 
       /**
        * Return the last value of a key of the localStorage if it's an array.
        */
-      last: function (key) {
+      this.last = function (key) {
         var parsedValues;
 
         return _.has(lS, key) &&
           _.isArray(parsedValues = JSON.parse(lS[key])) &&
           _.last(parsedValues);
-      },
+      };
 
       /**
        * Push a value in a key of the localStorage.
        */
-      push: function (key, value) {
+      this.push = function (key, value) {
         var savedValue = this.get(key);
 
         if (_.isArray(savedValue)) {
@@ -52,21 +52,32 @@
         } else {
           this.save(key, [value]);
         }
-      },
+      };
 
       /**
        * Save a value in a key of the localStorage.
        */
-      save: function (key, value) {
+      this.save = function (key, value) {
         lS[key] = JSON.stringify(value);
-      },
+      };
 
       /**
        * Delete a key of the localStorage.
        */
-      delete: function (key) {
+      this.delete = function (key) {
         delete lS[key];
-      }
-    };
-  }]);
+      };
+
+      /**
+       * Delete a item from a list of values for a specified key.
+       */
+      this.deleteValue = function (key, valueToDelete) {
+        var values = this.get(key);
+
+        if (_.isArray(values)) {
+          this.save(key, _.pull(values, valueToDelete));
+        }
+      };
+    }
+  ]);
 })();

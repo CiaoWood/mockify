@@ -18,8 +18,8 @@ module.exports = (function () {
         resHeaders  : Object,
         body        : Object,
         comment     : String,
+        delay       : Number,
         targetId    : Number
-
       }, {
         cache       : false,
         methods     : {

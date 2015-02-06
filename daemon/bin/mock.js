@@ -25,7 +25,7 @@ var logError = function (message) {
   process.stderr.write('[mock-error] ' + message + '\n');
 };
 
-var logResponse = function (message) {
+var logMessage = function (message) {
   process.stdout.write('[mock-response] ' + message + '\n');
 };
 
@@ -41,37 +41,41 @@ var runApp = function (target, db) {
         url: req.url,
         parameters: JSON.stringify(req.body),
         targetId: target.id
-      }, function (err, responses) {
+      }, function (err, records) {
         if (err) {
           log('An error has occurred when fetching data. ' + err);
           res.status(500).send(err);
         } else {
-          var response = _.first(responses);
+          var record = _.first(records);
 
-          if (!response) {
-            response.status = 404;
-            res.status(404).send('No response has been found.');
+          if (!record) {
+            record.status = 404;
+            res.status(404).send('No record has been found.');
 
           } else {
             // set headers
-            _.forEach(response.resHeaders, function (value, key) {
+            _.forEach(record.resHeaders, function (value, key) {
               res.setHeader(key, value);
             });
 
-            res.setHeader('X-mockify-rowuuid', response.uuid);
+            res.setHeader('X-mockify-rowuuid', record.uuid);
 
-            res
-              .status(response.status || 500)
-              .send(response.body || 'empty body');
+            // delay the result according to the record delay attribute
+            setTimeout(function () {
+              res
+                .status(record.status || 500)
+                .send(record.body || 'empty body');
+            }, record.delay);
 
             var message = [
-              response.status,
-              response.method,
+              record.status,
+              record.method,
               'localhost:' + target.port,
-              response.url
+              record.url,
+              record.id
             ].join(';');
 
-            logResponse(message);
+            logMessage(message);
           }
         }
       });
