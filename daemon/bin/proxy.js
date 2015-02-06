@@ -16,7 +16,9 @@ var httpProxy   = require('http-proxy'),
     url         = require('url'),
     db          = require('../lib/db')(),
     targetId    = argv.targetId,
-    exit        = function () { process.exit(1); },
+    exit        = function () {
+      process.exit(1);
+    },
 
     responsesToHandle   = {};
 
