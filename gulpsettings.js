@@ -21,8 +21,8 @@ var settings = (function () {
       'www/vendor/angular-perfect-scrollbar/src/angular-perfect-scrollbar.js',
       'www/vendor/angular-truncate/src/truncate.js',
       'www/vendor/perfect-scrollbar/min/perfect-scrollbar.min.js',
-      'www/vendor/lodash/dist/lodash.js',
-      'www/vendor/underscore.string/lib/underscore.string.js'
+      'www/vendor/lodash/lodash.min.js'
+      // 'www/vendor/underscore.string/lib/underscore.string.js'
     ]
   };
 

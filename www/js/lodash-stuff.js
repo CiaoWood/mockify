@@ -3,7 +3,7 @@
 (function () {
   'use strict';
 
-  _.str.include('Underscore.string', 'string');
+  // _.str.include('Underscore.string', 'string');
 
   /**
    * Merge properties as private attributes in obj.
