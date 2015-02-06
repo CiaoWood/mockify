@@ -1,11 +1,12 @@
 # CHANGELOG
 
-## Head
+## 0.2.3
 
 Webapp:
-- Display responses of child processes
-- List/edit/delete/add records
-- Improve UI
+- Reorganize all the webapp sources
+- Improve UX
+- Add the listing of responses and records.
+- Allow the edition of records.
 
 DB:
 - Rename the table 'response' to 'records'
