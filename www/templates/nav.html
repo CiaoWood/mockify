@@ -1,0 +1,24 @@
+<nav>
+  <ul>
+    <li ng-class="{'active': $state.includes('app.dashboard.targets')}">
+      <span class="glyphicon glyphicon-transfer"
+            title="Targets"
+            ng-click="$state.go('app.dashboard.targets');">
+      </span>
+    </li>
+
+    <li ng-class="{'active': $state.includes('app.dashboard.records')}">
+      <span class="glyphicon glyphicon-floppy-disk"
+            title="Records"
+            ng-click="$state.go('app.dashboard.records');">
+      </span>
+    </li>
+
+    <li ng-class="{'active': $state.includes('app.dashboard.responses')}">
+      <span class="glyphicon glyphicon-list"
+            title="Responses"
+            ng-click="$state.go('app.dashboard.responses');">
+      </span>
+    </li>
+  </ul>
+</nav>

@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module('mockify.entity.response', [
+  angular.module('mockify.response.entity.response', [
   ])
 
   /**

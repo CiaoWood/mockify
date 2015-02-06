@@ -1,7 +1,29 @@
-<table class="table table-striped data">
+<div class="action-buttons" ng-class="{'has-error': search.error}">
+  <div class="input-container">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Search"
+      ng-model="search.value"
+      ng-change="updateSearchValue()" />
+
+    <span
+      class="glyphicon glyphicon-remove icon-remove"
+      ng-click="clearSearch()">
+    </span>
+  </div>
+</div>
+
+<table class="table table-striped responses">
   <thead>
-    <th class="icon">Who</th>
-    <th>Target response</th>
+    <th class="witch">Which</th>
+    <th class="code">Status</th>
+    <th class="method">Method</th>
+    <th class="host">Source host</th>
+    <th class="path">Path</th>
+    <th class="arrow"></th>
+    <th class="host">Dest. host</th>
+    <th class="path">Path</th>
     <th class="icon">
       <span class="glyphicon glyphicon-ban-circle" title="Clear history" ng-click="clearHistory()"></span>
     </th>
@@ -13,56 +35,48 @@
         <span
           class="glyphicon glyphicon-th-list"
           ng-class="'log-' + response._source"
-          set-to-search-box="type"
+          set-to-search-box="source"
           title="{{response._source}}">
         </span>
       </td>
 
       <td>
-        <span ng-if="response._source === 'proxy'">
-          <span class="label label-status label-{{response._status}}">
-            <a href="" set-to-search-box="status">{{response._status}}</a>
-          </span>
-
-          <span class="label label-primary">
-            <a href="" set-to-search-box="method">{{response._method}}</a>
-          </span>
-
-          <span class="label label-primary">
-            <a href="" set-to-search-box="host">{{response._host}}</a>
-          </span>
-
-          <span class="label label-primary">
-            <a href="" set-to-search-box="url">{{response._url}}</a>
-          </span>
-
-          <span class="glyphicon glyphicon-arrow-right"></span>
-
-          <span class="label label-primary">
-            <a href="" set-to-search-box>{{response._targetHost}}</a>
-          </span>
-
-          <span class="label label-primary">
-            <a href="" set-to-search-box>{{response._url}}</a>
-          </span>
+        <span class="label label-status label-{{response._status}}">
+          <a href="" set-to-search-box="status">{{response._status}}</a>
         </span>
+      </td>
 
-        <span ng-if="response._source === 'mock'">
-          <span class="label label-status label-{{response._status}}">
-            <a href="" set-to-search-box="status">{{response._status}}</a>
-          </span>
+      <td>
+        <span class="label label-primary">
+          <a href="" set-to-search-box="method">{{response._method}}</a>
+        </span>
+      </td>
 
-          <span class="label label-primary">
-            <a href="" set-to-search-box="method">{{response._method}}</a>
-          </span>
+      <td>
+        <span class="label label-primary">
+          <a href="" set-to-search-box="host">{{response._host}}</a>
+        </span>
+      </td>
 
-          <span class="label label-primary">
-            <a href="" set-to-search-box="host">{{response._host}}</a>
-          </span>
+      <td>
+        <span class="label label-primary">
+          <a href="" set-to-search-box="url">{{response._url}}</a>
+        </span>
+      </td>
 
-          <span class="label label-primary">
-            <a href="" set-to-search-box="url">{{response._url}}</a>
-          </span>
+      <td>
+        <span ng-if="response._source === 'proxy'" class="glyphicon glyphicon-arrow-right"></span>
+      </td>
+
+      <td>
+        <span ng-if="response._source === 'proxy'" class="label label-primary">
+          <a href="" set-to-search-box>{{response._targetHost}}</a>
+        </span>
+      </td>
+
+      <td>
+        <span ng-if="response._source === 'proxy'" class="label label-primary">
+          <a href="" set-to-search-box>{{response._url}}</a>
         </span>
       </td>
 
@@ -77,7 +91,7 @@
     </tr>
 
     <tr ng-if="!responses.length">
-      <td colspan="3">No response yet.</td>
+      <td colspan="9">No response yet.</td>
     </tr>
   </tbody>
 </table>

@@ -3,8 +3,8 @@
 (function () {
   'use strict';
 
-  angular.module('mockify.service.webSocket', [
-    'mockify.service.config'
+  angular.module('mockify.common.service.webSocket', [
+    'mockify.common.service.config'
   ])
 
   .factory('webSocketService', ['$rootScope', '$interval', 'configFactory',

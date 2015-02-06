@@ -1,8 +1,8 @@
 (function () {
   'use strict';
 
-  angular.module('mockify.alert', [
-    'mockify.service.webSocket'
+  angular.module('mockify.alert.controller.alert', [
+    'mockify.common.service.webSocket'
   ])
 
   /**

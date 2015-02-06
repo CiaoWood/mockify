@@ -1,4 +1,24 @@
-<table class="table table-striped data">
+<div class="action-buttons" ng-class="{'has-error': search.error}">
+  <div class="input-container">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Search"
+      ng-model="search.value"
+      ng-change="updateSearchValue()" />
+
+    <span
+      class="glyphicon glyphicon-remove icon-remove"
+      ng-click="clearSearch()">
+    </span>
+  </div>
+
+  <button type="button" class="btn btn-primary pull-right" ng-click="$state.go('app.dashboard.records.add')">
+    Add record
+  </button>
+</div>
+
+<table class="table table-striped records">
   <thead>
     <tr>
       <th width="50px">Status</th>

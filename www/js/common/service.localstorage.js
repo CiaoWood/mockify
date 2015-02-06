@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module('mockify.service.localStorage', [
+  angular.module('mockify.common.service.localStorage', [
   ])
 
   .service('localStorageService', ['$window',

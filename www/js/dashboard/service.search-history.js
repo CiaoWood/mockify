@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module('mockify.service.searchHistory', [
+  angular.module('mockify.dashboard.service.searchHistory', [
   ])
 
   /**

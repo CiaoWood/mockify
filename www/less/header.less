@@ -1,13 +1,18 @@
 .header {
+  position: relative;
+  z-index: @second-zindex;
   width: 100%;
-  height: 40px;
-  padding: 8px;
-  background: #121316;
+  height: @header-height;
+  padding: 0 10px;
+  background: #242429;
+  box-shadow: 0px 2px 3px 0px #111;
 
   h1 {
     margin: 0;
     padding: 0;
-    color: #bbb;
+    color: white;
+    font-size: 2em;
+    line-height: 2em;
 
     span {
       color: @proxy-color;
@@ -16,11 +21,11 @@
 
   p.baseline {
     position: absolute;
-    top: 16px;
-    left: 100px;
+    top: 23px;
+    left: 120px;
     margin: 0;
     padding: 0;
     color: #888;
-    font-size: 0.8em;
+    font-size: 1em;
   }
 }

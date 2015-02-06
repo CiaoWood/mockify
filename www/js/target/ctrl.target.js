@@ -1,13 +1,26 @@
 (function () {
   'use strict';
 
-  angular.module('mockify.process', [
-    'mockify.service.webSocket',
-    'mockify.service.localStorage',
-    'mockify.entity.target',
+  angular.module('mockify.target.controller.target', [
+    'mockify.common.service.webSocket',
+    'mockify.common.service.localStorage',
+    'mockify.target.entity.target',
 
     'toggle-switch'
   ])
+
+  .config(['$stateProvider', function ($stateProvider) {
+    $stateProvider
+      .state('app.dashboard.targets', {
+        url: '/targets',
+        views: {
+          'primaryContainer@app': {
+            templateUrl: 'targets.html',
+            controller: 'TargetCtrl'
+          }
+        }
+      });
+  }])
 
   .controller('TargetCtrl', [
     '$scope',
@@ -23,7 +36,6 @@
       localStorage,
       Target
     ) {
-
       var initDefaultUrl = function () {
         $scope.targetsStored = localStorage.get('urls', 10);
         return localStorage.last('urls') ||
