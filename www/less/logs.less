@@ -1,15 +1,30 @@
-@log-background: #2f3742;
+@log-background: #38424f;
 
 div.logs-container {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  min-height: 150px;
-  max-height: 300px;
-  padding: 0 10px;
+  z-index: 1000;
+  top: 0;
+  right: -50%;
+  width: 50%;
+  height: 100%;
+  padding: 10px;
   background: @log-background;
-  box-shadow: 0px -2px 3px 0px #222;
+  box-shadow: -3px 0px 3px 0px #222;
+  opacity: 0.9;
+  transition: right 0.5s;
+
+  &.opened {
+    right: 0;
+  }
+
+  span.close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: white;
+    opacity: 1 !important;
+    text-shadow: none;
+  }
 
   ul.logs {
     // no margin to fix the perfect-scrollbar height

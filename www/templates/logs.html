@@ -1,5 +1,7 @@
 <h3>Logs</h3>
 
+<span class="close glyphicon glyphicon-remove" close-logs></span>
+
 <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="5" refresh-on-change="proxyLogs" update-scroll>
   <ul class="logs">
     <li ng-repeat="log in logs track by $index">
@@ -11,5 +13,3 @@
     </li>
   </ul>
 </perfect-scrollbar>
-
-<div class="spacer"></div>
