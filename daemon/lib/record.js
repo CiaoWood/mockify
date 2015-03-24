@@ -3,7 +3,9 @@
 module.exports = function () {
   var Q               = require('q'),
       Record          = require('./../entity/record'),
-      recordStorage   = require('./../storage/record');
+      recordStorage   = require('./../storage/record'),
+      _               = require('./../lib/helper')._,
+      moment          = require('moment');
 
   /**
    * List all records.
@@ -24,9 +26,28 @@ module.exports = function () {
   };
 
   /**
+   * Add a record.
+   */
+  var add = function (properties) {
+    var deferred = Q.defer();
+
+    properties = _.defaults({
+      _uuid: _.uuid(),
+      _dateCreated: moment().toDate()
+    }, properties);
+
+    recordStorage.create(new Record(properties),
+      function (err) {
+        err && deferred.reject(err);
+        deferred.resolve('The record has been added.');
+      }
+    );
+
+    return deferred.promise;
+  };
+
+  /**
    * Update a record.
-   * @param  {Record} record
-   * @param  {Object} properties
    */
   var update = function (properties) {
     var deferred = Q.defer();
@@ -43,7 +64,6 @@ module.exports = function () {
 
   /**
    * Remove a record.
-   * @param  {Object} properties
    */
   var remove = function (properties) {
     var deferred = Q.defer();
@@ -58,6 +78,7 @@ module.exports = function () {
 
   return {
     list: list,
+    add: add,
     update: update,
     remove: remove
   };

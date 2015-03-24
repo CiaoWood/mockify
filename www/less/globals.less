@@ -2,6 +2,7 @@ body {
   font-family: 'Cabin', sans-serif;
   font-weight: normal;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
  /* Overwrite bootstrap theme */
@@ -14,39 +15,11 @@ body {
   color: white;
 }
 
-.label {
-  font-size: 90%;
-  margin: 0 2px;
-
-  &.label-status {
-    color: black;
-
-    a {
-      color: black !important;
-    }
-
-    &.label-200, &.label-201, &.label-202, &.label-203, &.label-204 {
-      background-color: #20FF58;
-    }
-
-    &.label-300, &.label-301, &.label-302, &.label-303, &.label-304 {
-      background-color: #ffb03d;
-    }
-
-    &.label-400, &.label-401, &.label-402, &.label-403, &.label-404 {
-      background-color: #ffb03d;
-    }
-
-    &.label-500, &.label-501, &.label-502, &.label-503, &.label-504 {
-      background-color: red;
-    }
-  }
-}
-
 /* Titles */
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Cabin', sans-serif;
+  margin: 0 0 15px 0;
 }
 
 h1 {
@@ -69,29 +42,6 @@ h3 {
 
 span[ng-click] {
   cursor: pointer;
-}
-
-/* Forms */
-
-div.action-buttons {
-  margin: 0.5em 0 1.2em 0;
-}
-
-input[type=text] {
-  position: relative;
-  z-index: 1;
-
-  // Include the remove icon in the input text
-  ~ .glyphicon-remove {
-    position: absolute;
-    z-index: 10;
-    top: 10px;
-    right: 5px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn.active:focus {
-  outline: none !important;
 }
 
 /* Classes */

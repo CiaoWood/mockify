@@ -53,6 +53,10 @@
       return this._enabled;
     };
 
+    Target.prototype.getUrlPort = function () {
+      return [this._url, this._port].join(':');
+    };
+
     /**
      * Add the target by emitting a websocket to the server.
      */

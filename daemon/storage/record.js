@@ -18,6 +18,22 @@ module.exports = (function () {
   };
 
   /**
+   * Create a record in database.
+   * @param  {Record}   record
+   * @param  {Function} callback
+   */
+  var create = function (record, callback) {
+    var params = _.publicProperties(record, [
+      '_uuid', '_dateCreated',
+      '_status', '_url', '_method',
+      '_parameters', '_reqHeaders', '_resHeaders', '_body',
+      '_comment', '_delay', '_targetId'
+    ]);
+
+    db.model('Record').create([params], callback);
+  };
+
+  /**
    * Update a record in database.
    * @param  {Record}   record
    * @param  {Object}   properties
@@ -46,6 +62,7 @@ module.exports = (function () {
 
   return {
     list: list,
+    create: create,
     update: update,
     remove: remove
   };

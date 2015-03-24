@@ -1,4 +1,36 @@
+div.form-group {
+  // for spinner positioning
+  position: relative;
+}
+
+form {
+  input.form-control,
+  select.form-control,
+  textarea.form-control {
+    max-width: 350px;
+  }
+
+  input[type=text] {
+    position: relative;
+    z-index: 1;
+
+    // Include the remove icon in the input text
+    ~ .glyphicon-remove {
+      position: absolute;
+      z-index: 10;
+      top: 10px;
+      right: 5px;
+    }
+  }
+
+  .btn:focus, .btn:active:focus, .btn.active:focus {
+    outline: none !important;
+  }
+}
+
 div.action-buttons {
+  margin: 0.5em 0 1.2em 0;
+
   > div {
     display: inline-block;
     vertical-align: top;

@@ -214,6 +214,127 @@
         }
       };
     }
-  ]);
+  ])
 
+  .controller('RecordAdditionCtrl', [
+    '$scope',
+    'webSocketService',
+    'targetFactory',
+
+    function (
+      $scope,
+      webSocket,
+      Target
+    ) {
+      /**
+       * Declare default values of the form.
+       */
+      var resetForm = function () {
+        $scope.field = _.defaults($scope.field, {
+          comment: {
+            isJson: false,
+            value: ''
+          },
+          method: {
+            isJson: false,
+            value: 'GET'
+          },
+          url: {
+            isJson: false,
+            value: ''
+          },
+          status: {
+            isJson: false,
+            value: '200'
+          },
+          delay: {
+            isJson: false,
+            value: '0'
+          },
+          targetId: {
+            isJson: false,
+            allValues: [],
+            value: undefined
+          },
+          body: {
+            isJson: true,
+            value: '{}'
+          },
+          resHeaders: {
+            isJson: true,
+            value: '{}'
+          },
+          reqHeaders: {
+            isJson: true,
+            value: '{}'
+          },
+          parameters: {
+            isJson: true,
+            value: '{}'
+          }
+        });
+      };
+
+      /**
+       * The listTargets event is triggered periodically.
+       * Just bind it to populate the selectbox of the template.
+       */
+      webSocket.on('listTargets', function (data) {
+        var targets = _.map(data.targets, function (targetProps) {
+          return new Target(targetProps);
+        });
+
+        $scope.field.targetId.allValues = targets;
+
+        if (angular.isUndefined($scope.field.targetId.value)) {
+          $scope.field.targetId.value =
+            $scope.field.targetId.allValues[0].id();
+        }
+      });
+
+      // Init the page
+
+      if (!$scope.field) {
+        $scope.field = {};
+      }
+
+      resetForm();
+
+      $scope.addRecord = function () {
+        var error = false;
+
+        // check JSON structures
+        _.forEach($scope.field, function (field, key) {
+          if (field.isJson) {
+            try {
+              JSON.parse(field.value);
+            }
+            catch (err) {
+              error = true;
+              $scope.alertError(
+                'The value of the ' + key +
+                ' property in not a valid JSON structure.');
+            }
+          }
+        });
+
+        if (!error) {
+          // make an object with keys and values from fields
+          var properties = _.reduce($scope.field,
+            function (result, field, key) {
+              result[key] = field.value;
+              return result;
+            }, {});
+
+          webSocket.emit('addRecord', _.publicProperties(properties));
+          webSocket.on('addRecord', function (msgLog) {
+            $scope.alertInfo(msgLog);
+
+            // reset the form
+            resetForm();
+          });
+        }
+      };
+    }
+  ]);
 })();

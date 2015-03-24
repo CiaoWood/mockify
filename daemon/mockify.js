@@ -120,6 +120,12 @@ module.exports = (function () {
 
       socket.on('listRecords', listRecords);
 
+      socket.on('addRecord', function (recordProperties) {
+        record.add(recordProperties).then(function (msgLog) {
+          io.emit('addRecord', msgLog);
+        }, alert.error);
+      });
+
       socket.on('updateRecord', function (recordProperties) {
         record.update(recordProperties).then(function (msgLog) {
           io.emit('updateRecord', msgLog);

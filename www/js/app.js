@@ -7,7 +7,9 @@
     'templates',
 
     'mockify.alert.controller.alert',
-    'mockify.dashboard.controller.dashboard'
+    'mockify.dashboard.controller.dashboard',
+
+    'mockify.common.directive.spinner'
   ])
 
   .config(['$urlRouterProvider', '$stateProvider',
